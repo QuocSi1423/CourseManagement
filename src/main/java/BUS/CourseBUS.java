@@ -38,7 +38,7 @@ public class CourseBUS {
         try {
             while(resultSet.next()) {
                 result = new CourseDTO(resultSet.getInt("CourseID"), 
-                    resultSet.getInt("DepartmentID"),
+                    new DepartmentDTO(),
                     resultSet.getString("Title"), 
                     resultSet.getInt("Credits") 
                 );
