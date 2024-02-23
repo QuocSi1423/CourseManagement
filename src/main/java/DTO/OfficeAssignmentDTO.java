@@ -2,7 +2,7 @@ package DTO;
 
 import java.time.LocalDateTime;
 
-public class OfficeAssignment {
+public class OfficeAssignmentDTO {
     private int instrutorID;
     private String location;
     private LocalDateTime timestamp;
