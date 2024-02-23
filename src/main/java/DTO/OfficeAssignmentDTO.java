@@ -6,8 +6,8 @@ public class OfficeAssignmentDTO {
     private int instrutorID;
     private String location;
     private LocalDateTime timestamp;
-    public OfficeAssignment(){};
-    public OfficeAssignment(int instructorID, String location, LocalDateTime timestamp){
+    public OfficeAssignmentDTO(){};
+    public OfficeAssignmentDTO(int instructorID, String location, LocalDateTime timestamp){
         this.instrutorID = instructorID;
         this.location = location;
         this.timestamp = timestamp;

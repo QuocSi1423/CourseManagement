@@ -114,7 +114,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL{
 
     @Override
     public List<StudentGradeDTO> getStudentGradesOfCCourse(int courseID) {
-         String selectQuery = "SELECT * FROM studentgrade WHERE CourseID = ?";
+         String selectQuery = "SELECT * FROM StudentGrade join Person on StudentGrade.StudentID = Person.PersonID WHERE CourseID = ?";
         List<StudentGradeDTO> studentGradeList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(selectQuery);

@@ -17,6 +17,10 @@ public class DepartmentDTO {
         this.startDate = startDate;
         this.administrator = administrator;
     }
+    public DepartmentDTO(int departmentID, String name){
+        this.departmentID = departmentID;
+        this.name = name;
+    }
     public int getDepartmentID() {
         return departmentID;
     }
