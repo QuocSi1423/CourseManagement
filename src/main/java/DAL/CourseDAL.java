@@ -6,6 +6,7 @@ import java.util.List;
 
 import DAL.IDAL.*;
 import DTO.CourseDTO;
+import DTO.DepartmentDTO;
 
 public class CourseDAL implements IObjectDAL, ICourseDAL{
     private DatabaseManager db;
@@ -18,15 +19,16 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public List<CourseDTO> getAllCourses() {
-        String query = "SELECT * FROM `course`";
+        String query = "SELECT * FROM `Course` join `Department` on Course.DeparmentID = Department.DepartmentID left join OnlineCourse on Course.CourseID = OnlineCourseID";
         ResultSet result = this.db.executeQuery(query);
         List<CourseDTO> courses = new ArrayList<>();
         try {
             while(result.next()) { 
                 courses.add(new CourseDTO(result.getInt("CourseID"), 
-                    result.getInt("DepartmentID"),
+                    new DepartmentDTO(result.getInt("DepartmentID"), result.getString("Name")),
                     result.getString("Title"), 
-                    result.getInt("Credits") 
+                    result.getInt("Credits") ,
+                    result.getInt("CourseID") == 0 ? 0:1
                     ));
             }
             return courses;
@@ -37,13 +39,13 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public List<CourseDTO> getCoursesByTitle(String title) {
-        String query = "SELECT * FROM `course` where `course`.`Title` = '" + title + "'";
+        String query = "SELECT * FROM `Course` where `course`.`Title` = '" + title + "'";
         ResultSet result = this.db.executeQuery(query);
         List<CourseDTO> courses = new ArrayList<>();
         try {
             while(result.next()) {
                 courses.add(new CourseDTO(result.getInt("CourseID"), 
-                result.getInt("DepartmentID"),
+                new DepartmentDTO(),
                 result.getString("Title"), 
                 result.getInt("Credits") 
                 ));
@@ -60,7 +62,7 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
         String query = "INSERT INTO `course` (`CourseID`, `Title`, `Credits`, `DepartmentID`) VALUES (NULL, " + "'" +
             course.getTitle() + "', '" + 
             course.getCredits() + "', '"+ 
-            course.getDepartmentID() +"');";
+            course.getDepartment().getDepartmentID() +"');";
         int result = this.db.executeNonQuery(query);
         return result;
     }
@@ -70,7 +72,7 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
         String query = "UPDATE `course` SET `Title` = '" + 
             course.getTitle() + "', `Credits` = " + 
             course.getCredits() + ", `DepartmentID` = '" + 
-            course.getDepartmentID() + "' where `CourseID` = '" +
+            course.getDepartment().getDepartmentID() + "' where `CourseID` = '" +
             course.getCourseID() + "'";
         int result = this.db.executeNonQuery(query);
         return result;

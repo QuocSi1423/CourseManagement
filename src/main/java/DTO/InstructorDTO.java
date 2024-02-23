@@ -1,24 +1,31 @@
 package DTO;
 
 public class InstructorDTO {
-    private int courseID;
-    private int lecturerID;
-    public InstructorDTO(){};
-    public InstructorDTO(int courseID, int lecturerID){
-        this.courseID = courseID;
-        this.lecturerID = lecturerID;
+    private CourseDTO course;
+    private LecturerDTO lecturer;
+
+    public InstructorDTO(){}
+
+    public InstructorDTO(CourseDTO course, LecturerDTO lecturer){
+        this.course = course;
+        this.lecturer = lecturer;
     }
-    public int getCourseID() {
-        return courseID;
+
+    public CourseDTO getCourse() {
+        return course;
     }
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
+
+    public void setCourse(CourseDTO course) {
+        this.course = course;
     }
-    public int getLecturerID() {
-        return lecturerID;
+
+    public LecturerDTO getLecturer() {
+        return lecturer;
     }
-    public void setLecturerID(int lecturerID) {
-        this.lecturerID = lecturerID;
+
+    public void setLecturer(LecturerDTO lecturer) {
+        this.lecturer = lecturer;
     }
+    
     
 }

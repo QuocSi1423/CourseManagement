@@ -12,7 +12,7 @@ public class CourseBUS {
     private ICourseDAL courseDAL;
     private ILecturerDAL lecturerDAL;
 
-    public CourseBUS(ICourseDAL courseDAL, ILecture lectureDAL) {
+    public CourseBUS(ICourseDAL courseDAL, ILecturerDAL lectureDAL) {
         this.courseDAL = courseDAL;
         this.lecturerDAL = lectureDAL;
     }

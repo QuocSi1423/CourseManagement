@@ -1,7 +1,7 @@
 package DAL;
 
 import DAL.IDAL.IObjectDAL;
-import DTO.OfficeAssignment;
+import DTO.OfficeAssignmentDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class OfficeAssignmentDAL implements IObjectDAL {
 
     @Override
     public <T> int insertObject(T object) {
-        OfficeAssignment dto = (OfficeAssignment) object;
+        OfficeAssignmentDTO dto = (OfficeAssignmentDTO) object;
 
         java.sql.Date date = java.sql.Date.valueOf(dto.getTimestamp().toLocalDate());
 
@@ -38,7 +38,7 @@ public class OfficeAssignmentDAL implements IObjectDAL {
 
     @Override
     public <T> int updateObject(T object) {
-        OfficeAssignment dto = (OfficeAssignment) object;
+        OfficeAssignmentDTO dto = (OfficeAssignmentDTO) object;
 
         java.sql.Date date = java.sql.Date.valueOf(dto.getTimestamp().toLocalDate());
 
@@ -71,7 +71,7 @@ public class OfficeAssignmentDAL implements IObjectDAL {
                 return null;
             }
 
-            return (T) new OfficeAssignment(
+            return (T) new OfficeAssignmentDTO(
                     rsSet.getInt("InstructorID"),
                     rsSet.getString("Location"),
                     LocalDateTime.parse(rsSet.getString("Timestamp"), formatter));

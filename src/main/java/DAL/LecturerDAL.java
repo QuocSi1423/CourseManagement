@@ -90,7 +90,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     @Override
     public List<LecturerDTO> getAllLecturers() {
         String query = String.format(
-                "SELECT PersonID, Lastname, Firstname, HireDate FROM Person "
+                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID"
                 + "WHERE HireDate IS NOT NULL");
 
         return getLecturers(query);
