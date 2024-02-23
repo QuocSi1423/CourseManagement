@@ -1,3 +1,4 @@
 *.env
 test/
 target/
+/Phan Mem Phan Lop/nbproject/private/
