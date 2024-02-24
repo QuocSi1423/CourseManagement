@@ -165,4 +165,11 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
             return null;
         }
     }
+
+    public static void main(String[] args) {
+        StudentDAL studentDAL = new StudentDAL();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        StudentDTO stu = new StudentDTO(99, "a","b",localDateTime);
+        studentDAL.insertObject(stu);
+    }
 }
