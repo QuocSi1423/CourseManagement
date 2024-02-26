@@ -15,11 +15,11 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.*;
 
 /**
  * @author luong
@@ -59,8 +59,14 @@ public class StudentGUI extends javax.swing.JPanel {
         
         studentList = studentBUS.getAllStudent();
 
+        int borderWidth = 1;
+        for (int i = 0; i < table.getColumnCount() - 1; i++) {
+            table.getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(new HeaderRenderer(borderWidth));
+        }
+
+        table.setShowGrid(true);
+        table.setGridColor(Color.gray);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        table.setGridColor(Color.GREEN);
         table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
         table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
         table.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
@@ -363,7 +369,7 @@ public class StudentGUI extends javax.swing.JPanel {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            int desiredRowHeight = 40;
+            int desiredRowHeight = 40;            
             table.setRowHeight(row, desiredRowHeight);
 
             return component;
@@ -371,7 +377,7 @@ public class StudentGUI extends javax.swing.JPanel {
     }
 
     private class CustomHeaderRenderer extends DefaultTableCellRenderer {
-                @Override
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -381,13 +387,39 @@ public class StudentGUI extends javax.swing.JPanel {
             component.setForeground(Color.WHITE);
             component.setFont(new Font("Segoe UI", Font.BOLD, 16));
             component.setPreferredSize(new Dimension(row, 40));
+
+            JTableHeader header = table.getTableHeader();
+            TableColumnModel colModel = header.getColumnModel();
+            TableColumn col = colModel.getColumn(column);
+
             return component;
         }
         public CustomHeaderRenderer() {
             setHorizontalAlignment(SwingConstants.CENTER);
-            setForeground(Color.WHITE);
-            setBackground(Color.decode("#0B08AB"));
-            setFont(new Font("Segoe UI", Font.BOLD, 16));
+//            setForeground(Color.WHITE);
+//            setBackground(Color.decode("#0B08AB"));
+//            setFont(new Font("Segoe UI", Font.BOLD, 16));
+        }
+    }
+
+    private class HeaderRenderer extends DefaultTableCellRenderer {
+        private final int borderWidth;
+
+        public HeaderRenderer(int borderWidth) {
+            this.borderWidth = borderWidth;
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, isSelected, row, column);
+            Font currentFont = component.getFont();
+            Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize());
+            ((JComponent) component).setFont(newFont);
+
+            MatteBorder border = new MatteBorder(0, 0, 0, borderWidth, Color.GRAY);
+            ((JComponent) component).setBorder(border);
+            return component;
         }
     }
 

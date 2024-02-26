@@ -4,6 +4,16 @@
  */
 package GUI.Lecturer;
 
+import BUS.CourseBUS;
+import DAL.CourseDAL;
+import DAL.LecturerDAL;
+import DTO.CourseDTO;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
+import java.util.List;
+
 /**
  *
  * @author luong
@@ -13,8 +23,18 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
     /**
      * Creates new form LecturerDetailGUI
      */
+    private List<CourseDTO> courseList;
+    private CourseBUS courseBUS;
+    private CourseDAL courseDAL;
+    private LecturerDAL lecturerDAL;
     public LecturerDetailGUI() {
         initComponents();
+        courseDAL = new CourseDAL();
+        courseBUS = new CourseBUS(courseDAL, lecturerDAL);
+
+        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
+        table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
     }
 
     /**
@@ -56,7 +76,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
 
         jLabel3.setText("jLabel3");
 
@@ -188,7 +208,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(102, 102, 102)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -307,7 +327,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41))
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -335,7 +355,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setText("Danh sách khóa học");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -346,7 +366,14 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                 "STT", "Tên khóa học", "Khoa", "Loại", "Tín chỉ"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setPreferredWidth(46);
+            table.getColumnModel().getColumn(1).setPreferredWidth(272);
+            table.getColumnModel().getColumn(2).setPreferredWidth(274);
+            table.getColumnModel().getColumn(3).setPreferredWidth(131);
+            table.getColumnModel().getColumn(4).setPreferredWidth(87);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -359,13 +386,13 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,6 +418,36 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private class CustomRowHeightRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            int desiredRowHeight = 40;
+            table.setRowHeight(row, desiredRowHeight);
+
+            return component;
+        }
+    }
+
+    private class CustomHeaderRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            String hexColorCode = "#444444";
+            Color customColor = Color.decode(hexColorCode);
+            component.setBackground(customColor);
+            component.setForeground(Color.WHITE);
+            component.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            component.setPreferredSize(new Dimension(row, 40));
+            return component;
+        }
+
+        public CustomHeaderRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -455,9 +512,9 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFirstname;
     private javax.swing.JLabel lblHireDate;
     private javax.swing.JLabel lblLastname;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
