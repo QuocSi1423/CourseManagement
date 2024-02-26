@@ -19,7 +19,7 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public List<CourseDTO> getAllCourses() {
-        String query = "SELECT * FROM `Course` join `Department` on Course.DeparmentID = Department.DepartmentID left join OnlineCourse on Course.CourseID = OnlineCourseID";
+        String query = "SELECT * FROM `Course` join `Department` on Course.DepartmentID = Department.DepartmentID left join OnlineCourse on Course.CourseID = OnlineCourse.CourseID";
         ResultSet result = this.db.executeQuery(query);
         List<CourseDTO> courses = new ArrayList<>();
         try {
@@ -28,7 +28,7 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
                     new DepartmentDTO(result.getInt("DepartmentID"), result.getString("Name")),
                     result.getString("Title"), 
                     result.getInt("Credits") ,
-                    result.getInt("CourseID") == 0 ? 0:1
+                    result.getString("url") != null ? 1 : 0
                     ));
             }
             return courses;
