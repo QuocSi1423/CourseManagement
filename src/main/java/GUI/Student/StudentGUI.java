@@ -55,6 +55,7 @@ public class StudentGUI extends javax.swing.JPanel {
         table.getColumnModel().getColumn(4).setPreferredWidth(120);
         studentList = studentBUS.getAllStudent();
 
+        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
         table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
         table.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
@@ -346,7 +347,7 @@ public class StudentGUI extends javax.swing.JPanel {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            int desiredRowHeight = 50;
+            int desiredRowHeight = 40;
             table.setRowHeight(row, desiredRowHeight);
 
             return component;
@@ -354,17 +355,18 @@ public class StudentGUI extends javax.swing.JPanel {
     }
 
     private class CustomHeaderRenderer extends DefaultTableCellRenderer {
-        //        @Override
-//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//
-//            String hexColorCode = "#0B08AB";
-//            Color customColor = Color.decode(hexColorCode);
-//            component.setBackground(customColor);
-//            component.setForeground(Color.WHITE);
-//            component.setFont(new Font("", Font.BOLD, 16));
-//            return component;
-//        }
+                @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            String hexColorCode = "#0B08AB";
+            Color customColor = Color.decode(hexColorCode);
+            component.setBackground(customColor);
+            component.setForeground(Color.WHITE);
+            component.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            component.setPreferredSize(new Dimension(row, 40));
+            return component;
+        }
         public CustomHeaderRenderer() {
             setHorizontalAlignment(SwingConstants.CENTER);
             setForeground(Color.WHITE);
