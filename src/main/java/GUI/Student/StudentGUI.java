@@ -10,6 +10,8 @@ import DAL.StudentDAL;
 import DTO.StudentDTO;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.*;
@@ -27,7 +29,7 @@ public class StudentGUI extends javax.swing.JPanel {
     /**
      * Creates new form StudentGUI
      */
-    private final DefaultTableModel dtm;
+//    private final DefaultTableModel dtm;
     private final List<StudentDTO> studentList;
     private final StudentBUS studentBUS;
     private int flag;
@@ -41,25 +43,29 @@ public class StudentGUI extends javax.swing.JPanel {
         flag = -1;
 
 //        table
-        dtm = new DefaultTableModel();
-        table.setModel(dtm);
-        dtm.addColumn("STT");
-        table.getColumnModel().getColumn(0).setPreferredWidth(82);
-        dtm.addColumn("Họ");
-        table.getColumnModel().getColumn(1).setPreferredWidth(238);
-        dtm.addColumn("Tên");
-        table.getColumnModel().getColumn(2).setPreferredWidth(227);
-        dtm.addColumn("Ngày đăng ký");
-        table.getColumnModel().getColumn(3).setPreferredWidth(285);
-        dtm.addColumn("Xóa");
-        table.getColumnModel().getColumn(4).setPreferredWidth(120);
+//        dtm = new DefaultTableModel();
+//        dtm.addColumn("STT");
+//        dtm.addColumn("Họ");
+//        dtm.addColumn("Tên");
+//        dtm.addColumn("Ngày đăng ký");
+//        dtm.addColumn("Xóa");
+//        
+//        table.getColumnModel().getColumn(0).setPreferredWidth(82);
+//        table.getColumnModel().getColumn(1).setPreferredWidth(238);
+//        table.getColumnModel().getColumn(2).setPreferredWidth(227);
+//        table.getColumnModel().getColumn(3).setPreferredWidth(285);
+//        table.getColumnModel().getColumn(4).setPreferredWidth(120);
+//        table.setModel(dtm);
+        
         studentList = studentBUS.getAllStudent();
 
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.setGridColor(Color.GREEN);
         table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
         table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
         table.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-        
+        table.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+
         showTable();
 
         ListSelectionModel selectionModel = table.getSelectionModel();
@@ -260,10 +266,18 @@ public class StudentGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-
+                "STT", "Họ", "Tên", "Ngày đăng ký", "Xóa"
             }
         ));
         jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setPreferredWidth(82);
+            table.getColumnModel().getColumn(1).setPreferredWidth(238);
+            table.getColumnModel().getColumn(2).setPreferredWidth(227);
+            table.getColumnModel().getColumn(3).setMinWidth(285);
+            table.getColumnModel().getColumn(3).setPreferredWidth(82);
+            table.getColumnModel().getColumn(4).setPreferredWidth(120);
+        }
 
         jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -330,6 +344,7 @@ public class StudentGUI extends javax.swing.JPanel {
                 stu.setFirstName(txtFirstName.getText());
                 stu.setLastName(txtLastName.getText());
                 studentBUS.updateObject(stu);
+                flag = -1;
             }
         }
         showTable();
@@ -339,6 +354,7 @@ public class StudentGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
         txtFirstName.setText("");
         txtLastName.setText("");
+        flag = -1;
     }//GEN-LAST:event_btnCancelActionPerformed
 
 
@@ -375,15 +391,63 @@ public class StudentGUI extends javax.swing.JPanel {
         }
     }
 
-    private class ButtonRenderer extends DefaultTableCellRenderer {
-        private final JButton button;
+    public class ButtonRenderer extends JButton implements TableCellRenderer {
+
         public ButtonRenderer() {
-            button = new JButton();
-            button.setBackground(Color.RED);
-            button.setIcon(new ImageIcon(getClass().getResource("/icons/bin.png")));
+            setOpaque(true);
+            setIcon(new ImageIcon("/icons/bin.png")); // Đặt icon cho button
+            setForeground(Color.RED); // Đặt màu cho icon
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            return this;
         }
     }
 
+    public class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            isPushed = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+               int selectedRow = table.getSelectedRow();
+                Object valueAtFirstColumn = table.getValueAt(selectedRow, 0);
+                int studentId = Integer.parseInt(valueAtFirstColumn.toString());
+                System.out.println(studentId);
+                showTable();
+            }
+            isPushed = false;
+            return label;
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
