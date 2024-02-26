@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseManager {
     private Connection connection;
@@ -65,21 +66,31 @@ public class DatabaseManager {
 
     //thuc hien cac tuy van them sua xoa
     public int executeNonQuery(String query) {
-        try {
-            if (connection != null) {
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
+    try {
+        if (connection != null) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-                int rowsAffected = preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
+            int lastInsertID = -1;
 
-                preparedStatement.close();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                lastInsertID = generatedKeys.getInt(1);
+            }
 
+            preparedStatement.close();
+
+            if (lastInsertID != -1) {
+                return lastInsertID;
+            } else {
                 return rowsAffected;
             }
-        } catch (SQLException e) {
-            System.out.println("Non-query execution failed");
-            e.printStackTrace();
         }
-        return -1; //loi
+    } catch (SQLException e) {
+        System.out.println("Non-query execution failed");
+        e.printStackTrace();
+    }
+        return -1; // lỗi
     }
 
     public Connection getConnection() {

@@ -19,7 +19,7 @@ public class OnsiteCourseDAL implements IObjectDAL{
         OnsiteCourseDTO onsiteCourse = (OnsiteCourseDTO) obj;
         // 1050', 'aaa', 'FS', '15:30')
         String query = "INSERT INTO `onsitecourse` (`CourseID`, `Location`, `Days`, `Time`) VALUES ('" +
-            onsiteCourse.getCourseID() + ", '" + 
+            onsiteCourse.getCourseID() + "', '" + 
             onsiteCourse.getLocation() + "', '" +
             onsiteCourse.getDays() +  "', '" +
             onsiteCourse.getTime() +
