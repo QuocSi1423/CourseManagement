@@ -140,4 +140,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
             return null;
         }
     }
+    
+    public static void main(String[] args) {
+        LecturerDTO lecturerDTO = new LecturerDAL().getAnObjectByID(0);
+        System.out.println(lecturerDTO.getFirstName());
+    }
 }

@@ -59,11 +59,6 @@ public class StudentGUI extends javax.swing.JPanel {
         
         studentList = studentBUS.getAllStudent();
 
-        int borderWidth = 1;
-        for (int i = 0; i < table.getColumnCount() - 1; i++) {
-            table.getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(new HeaderRenderer(borderWidth));
-        }
-
         table.setShowGrid(true);
         table.setGridColor(Color.gray);
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
