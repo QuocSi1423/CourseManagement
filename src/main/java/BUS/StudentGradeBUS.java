@@ -36,13 +36,13 @@ public class StudentGradeBUS {
     }
 
     public <T> int updateObject(T object) {
-        StudentGradeDTO studentGradeObj = (StudentGradeDTO) object;
-        StudentGradeDTO studentGradeDTO = ((IObjectDAL) this.studentGradeDAL).
-                getAnObjectByID(studentGradeObj.getEnrollmentID());
-        if (studentGradeDTO != null) {
+      StudentGradeDTO studentGradeObj = (StudentGradeDTO) object;
+//        StudentGradeDTO studentGradeDTO = ((IObjectDAL) this.studentGradeDAL).
+//                getAnObjectByID(studentGradeObj.getEnrollmentID());
+//        if (studentGradeDTO != null) {
             return ((IObjectDAL) studentGradeDAL).updateObject(studentGradeObj);
-        }
-        return 0;
+//        }
+//        return 0;
     }
 
     public int removeObject(int objectID) {
@@ -59,10 +59,10 @@ public class StudentGradeBUS {
     }
 
     public List<StudentGradeDTO> getStudentGradesOfCCourse(int courseID) {
-        CourseDTO course = ((IObjectDAL) this.courseDAL).getAnObjectByID(courseID);
-        if (course != null)
+//        CourseDTO course = ((IObjectDAL) this.courseDAL).getAnObjectByID(courseID);
+//        if (course != null)
             return this.studentGradeDAL.getStudentGradesOfCCourse(courseID);
-        return null;
+        //return null;
     }
 
 }
