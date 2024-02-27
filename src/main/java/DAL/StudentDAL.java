@@ -125,7 +125,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
                 if (dateStr != null) {
                     date = LocalDateTime.parse(dateStr, formatter);
                 }
-
+                
                 studentList.add(new StudentDTO(rsSet.getInt("PersonID"),
                         rsSet.getString("Lastname"),
                         rsSet.getString("Firstname"),

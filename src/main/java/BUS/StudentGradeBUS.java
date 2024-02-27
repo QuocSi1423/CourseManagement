@@ -53,16 +53,16 @@ public class StudentGradeBUS {
         }
         return 0;
     }
-
+    
     public <T> T getAnObjectByID(int objectID) {
         return ((IObjectDAL) studentGradeDAL).getAnObjectByID(objectID);
     }
-
+//fix bug
     public List<StudentGradeDTO> getStudentGradesOfCCourse(int courseID) {
-        CourseDTO course = ((IObjectDAL) this.courseDAL).getAnObjectByID(courseID);
-        if (course != null)
+//        CourseDTO course = ((IObjectDAL) this.courseDAL).getAnObjectByID(courseID);
+//        if (course != null)
             return this.studentGradeDAL.getStudentGradesOfCCourse(courseID);
-        return null;
+        //return null;
     }
-
+    
 }
