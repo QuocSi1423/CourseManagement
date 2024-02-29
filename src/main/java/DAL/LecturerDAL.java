@@ -136,4 +136,16 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
             return null;
         }
     }
+
+    @Override
+    public List<LecturerDTO> getLecturerNotAssignForACourse(int courseID) {
+        String query = String.format("select * from person"+
+                " left join courseinstructor" + 
+                " on person.PersonID = courseinstructor.PersonID"+
+                " and courseinstructor.CourseID = %d"+
+                " where person.HireDate is not null"+
+                " and courseinstructor.PersonID is null",courseID);
+
+        return getLecturers(query);
+    }
 }

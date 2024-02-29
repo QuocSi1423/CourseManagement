@@ -146,23 +146,21 @@ public class AssignmentManagement extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(NameOfLecturerJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addButton))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NameOfLecturerJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(225, 225, 225)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,8 +224,8 @@ public class AssignmentManagement extends javax.swing.JFrame {
     // các phương thức điều chỉnh giao diện 
     public void tableInitialization() {
         // lấy dữ liệu vào hai danh sách
-        this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(4022);
-        this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.lecturerBUS.getAllLecturers();
+        this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(this.courseDTO.getCourseID());
+        this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturerNotAssignForACourse(this.courseDTO.getCourseID());
         // khởi tạo đối tượng cho bảng
         this.assignedTableModel = (DefaultTableModel) this.AssignedJT.getModel();
         this.selectedRowAssignedTable = -1;
@@ -297,15 +295,15 @@ public class AssignmentManagement extends javax.swing.JFrame {
         for(int i=0; i<selectedRows.length; i++) {
             int rowIndex = selectedRows[i];
             int id = (int) this.unassignedTableModel.getValueAt(rowIndex, 1);
-            LecturerDTO lecturerDTO = getALecturerById(id);
+            LecturerDTO lecturerDTO = getALecturerByIdOnListUnassign(id);
             this.instructorBUS.createAInstructor(new InstructorDTO(this.courseDTO, lecturerDTO));
-            this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(4022);
-            this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.lecturerBUS.getAllLecturers();
+            this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(this.courseDTO.getCourseID());
+            this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturerNotAssignForACourse(this.courseDTO.getCourseID());
             loadDataToTable(this.listAssignedtLectures, this.listUnassignedLectures);
         }
     }
     
-    public LecturerDTO getALecturerById(int idLecturer) {
+    public LecturerDTO getALecturerByIdOnListUnassign(int idLecturer) {
         for(LecturerDTO lecturerDTO : this.listUnassignedLectures) {
             if(lecturerDTO.getID() == idLecturer) {
                 return lecturerDTO;
@@ -317,12 +315,21 @@ public class AssignmentManagement extends javax.swing.JFrame {
     // xử lý sự kiện nút xóa phân công
     public void cancelAssignmentToLecturer(int rowIndex) {
         int id = (int) this.assignedTableModel.getValueAt(rowIndex, 1);
-        LecturerDTO lecturerDTO = getALecturerById(id);
+        LecturerDTO lecturerDTO = getALecturerByIdOnListAssign(id);
         int result = this.instructorBUS.removeAInstructor(new InstructorDTO(this.courseDTO, lecturerDTO));
-        this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(4022);
-        this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.lecturerBUS.getAllLecturers();
+        this.listAssignedtLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturersOfCourse(this.courseDTO.getCourseID());
+        this.listUnassignedLectures = (ArrayList<LecturerDTO>) this.courseBUS.getLecturerNotAssignForACourse(this.courseDTO.getCourseID());
         loadDataToTable(this.listAssignedtLectures, this.listUnassignedLectures);
         System.out.println(result);
+    }
+    
+    public LecturerDTO getALecturerByIdOnListAssign(int idLecturer) {
+        for(LecturerDTO lecturerDTO : this.listAssignedtLectures) {
+            if(lecturerDTO.getID() == idLecturer) {
+                return lecturerDTO;
+            }
+        }
+        return null;
     }
     
 }
