@@ -426,9 +426,11 @@ public class AddStudentsGUI extends javax.swing.JFrame {
             if (!isExist(studentDTO.getID())) {
                 LocalDateTime localDateTime = studentDTO.getEnrollmentDate();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                String formattedDate = localDateTime.format(formatter);
-                ImageIcon icon = new ImageIcon(getClass().getResource("/Icon/icons8-unchecked-checkbox-24.png"));
-                model.addRow(new Object[]{studentDTO.getID(), studentDTO.getFirstName(), studentDTO.getLastName(), formattedDate, icon});
+                if (localDateTime != null) {
+                    String formattedDate = localDateTime.format(formatter);
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Icon/icons8-unchecked-checkbox-24.png"));
+                    model.addRow(new Object[]{studentDTO.getID(), studentDTO.getFirstName(), studentDTO.getLastName(), formattedDate, icon});
+                }
             }
         }
         jTable_ListOfStudent.addMouseListener(new MouseAdapter() {
