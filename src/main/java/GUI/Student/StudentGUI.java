@@ -13,10 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
@@ -30,16 +29,40 @@ public class StudentGUI extends javax.swing.JPanel {
      * Creates new form StudentGUI
      */
 //    private final DefaultTableModel dtm;
-    private final List<StudentDTO> studentList;
+    private List<StudentDTO> studentList;
     private final StudentBUS studentBUS;
     private int flag;
     private final IStudentDAL studentDAL;
     private LocalDateTime currentDate;
     private LocalDateTime enrollmentDate;
+    private StudentDTO student;
+    private JLabel lblDelete;
     public StudentGUI() {
-        initComponents();
         studentDAL = new StudentDAL();
         studentBUS = new StudentBUS(studentDAL);
+        initComponents();
+        ImageIcon iconDelete = new ImageIcon(getClass().getResource("/icons/bin.png"));
+        lblDelete = new JLabel(iconDelete);
+        Input txtGetByName = new Input("Tìm kiếm");
+        txtGetByName.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        
+        String hexColorCode = "#98A2FF";
+        Color customColor = Color.decode(hexColorCode);
+        txtGetByName.setBackground(customColor);
+        txtGetByName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (txtGetByName.getText().equals("") || txtGetByName.getText().equals("Tìm kiếm")) {
+                    studentList = studentBUS.getAllStudent();
+                } else {
+                    studentList = getByName(txtGetByName.getText());
+                }
+                showTable();
+            }
+        });
+        
+        jPanel6.add(txtGetByName);
+        
         flag = -1;
 
 //        table
@@ -59,14 +82,6 @@ public class StudentGUI extends javax.swing.JPanel {
         
         studentList = studentBUS.getAllStudent();
 
-        table.setShowGrid(true);
-        table.setGridColor(Color.gray);
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
-        table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
-        table.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-        table.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
-
         showTable();
 
         ListSelectionModel selectionModel = table.getSelectionModel();
@@ -78,7 +93,8 @@ public class StudentGUI extends javax.swing.JPanel {
                     if (selectedRow != -1) {
                         Object valueAtFirstColumn = table.getValueAt(selectedRow, 0);
                         int studentId = Integer.parseInt(valueAtFirstColumn.toString());
-                        StudentDTO student = (StudentDTO) studentBUS.getAnObjectByID(studentId);
+                        
+                        student = (StudentDTO) studentBUS.getAnObjectByID(studentId);
                         flag = studentId;
                         txtFirstName.setText(student.getFirstName());
                         txtLastName.setText(student.getLastName());
@@ -92,12 +108,28 @@ public class StudentGUI extends javax.swing.JPanel {
 
 
     public void showTable() {
+        DefaultTableCellRenderer renderer =new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                if (value instanceof Component) {
+                    return (Component) value;
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+
+        table.setShowGrid(true);
+        table.setGridColor(Color.gray);
+        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
+        table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
+        table.getColumnModel().getColumn(4).setCellRenderer(renderer);
         DefaultTableModel model = (DefaultTableModel) this.table.getModel();
         model.setRowCount(0);
         for (StudentDTO stu : studentList) {
             model.addRow(new Object[]{
                     stu.getID(), stu.getLastName(), stu.getFirstName(), stu.getEnrollmentDate(),
-                    new Button()
+                    lblDelete
             });
         }
     }
@@ -124,7 +156,6 @@ public class StudentGUI extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -254,11 +285,6 @@ public class StudentGUI extends javax.swing.JPanel {
         jPanel6.setPreferredSize(new java.awt.Dimension(346, 40));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jTextField3.setBackground(new java.awt.Color(152, 162, 255));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTextField3.setText("Tìm Kiếm");
-        jPanel6.add(jTextField3, java.awt.BorderLayout.CENTER);
-
         jPanel7.setPreferredSize(new java.awt.Dimension(1252, 670));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -270,13 +296,17 @@ public class StudentGUI extends javax.swing.JPanel {
                 "STT", "Họ", "Tên", "Ngày đăng ký", "Xóa"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setPreferredWidth(82);
             table.getColumnModel().getColumn(1).setPreferredWidth(238);
             table.getColumnModel().getColumn(2).setPreferredWidth(227);
-            table.getColumnModel().getColumn(3).setMinWidth(285);
-            table.getColumnModel().getColumn(3).setPreferredWidth(82);
+            table.getColumnModel().getColumn(3).setPreferredWidth(285);
             table.getColumnModel().getColumn(4).setPreferredWidth(120);
         }
 
@@ -339,6 +369,7 @@ public class StudentGUI extends javax.swing.JPanel {
                 stu.setFirstName(txtFirstName.getText());
                 stu.setLastName(txtLastName.getText());
                 stu.setEnrollmentDate(currentDate);
+                System.out.println(stu.getFirstName() + "," + stu.getLastName() + "," + stu.getEnrollmentDate().toString());
                 studentBUS.insertObject(stu);
             } else {
                 StudentDTO stu = (StudentDTO) studentBUS.getAnObjectByID(flag);
@@ -348,6 +379,7 @@ public class StudentGUI extends javax.swing.JPanel {
                 flag = -1;
             }
         }
+        studentList = studentBUS.getAllStudent();
         showTable();
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -357,6 +389,45 @@ public class StudentGUI extends javax.swing.JPanel {
         txtLastName.setText("");
         flag = -1;
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+        int column = table.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = table.rowAtPoint(evt.getPoint());
+//        int row = evt.getY() / table.getRowHeight();
+        System.out.println(column + " " + row);
+        delete(column, row);
+    }//GEN-LAST:event_tableMouseClicked
+
+    public void delete(int column, int row) {
+        System.out.println("aaaaa");
+        if (column == 4) {
+            Object value =  table.getValueAt(row, 0);
+            System.out.println("Value of column 1: " + value);
+            int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa?", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+
+            if (choice == JOptionPane.OK_OPTION) {
+                int studentDelete = studentBUS.removeObject((int) value);
+//                studentBUS.removeObject(studentDelete);
+                
+                if (studentDelete == -1) {
+                    JOptionPane.showMessageDialog(null, "Không thể thực hiện xóa đối tượng", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            studentList = studentBUS.getAllStudent();
+            showTable();
+        }
+    }
+
+    public List<StudentDTO> getByName(String studentName) {
+        List<StudentDTO> list = new ArrayList<>();
+        for (StudentDTO student : studentList) {
+            if (student.getFirstName().equalsIgnoreCase(studentName) || student.getLastName().equalsIgnoreCase(studentName)) {
+                list.add(student);
+            }
+        }
+        return list;
+    }
 
 
     private class CustomRowHeightRenderer extends DefaultTableCellRenderer {
@@ -397,84 +468,7 @@ public class StudentGUI extends javax.swing.JPanel {
         }
     }
 
-    private class HeaderRenderer extends DefaultTableCellRenderer {
-        private final int borderWidth;
 
-        public HeaderRenderer(int borderWidth) {
-            this.borderWidth = borderWidth;
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, isSelected, row, column);
-            Font currentFont = component.getFont();
-            Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize());
-            ((JComponent) component).setFont(newFont);
-
-            MatteBorder border = new MatteBorder(0, 0, 0, borderWidth, Color.GRAY);
-            ((JComponent) component).setBorder(border);
-            return component;
-        }
-    }
-
-    public class ButtonRenderer extends JButton implements TableCellRenderer {
-
-        public ButtonRenderer() {
-            setOpaque(true);
-            setIcon(new ImageIcon("/icons/bin.png")); // Đặt icon cho button
-            setForeground(Color.RED); // Đặt màu cho icon
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-            return this;
-        }
-    }
-
-    public class ButtonEditor extends DefaultCellEditor {
-        protected JButton button;
-        private String label;
-        private boolean isPushed;
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button = new JButton();
-            button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
-                }
-            });
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                                                     boolean isSelected, int row, int column) {
-            isPushed = true;
-            return button;
-        }
-
-        public Object getCellEditorValue() {
-            if (isPushed) {
-               int selectedRow = table.getSelectedRow();
-                Object valueAtFirstColumn = table.getValueAt(selectedRow, 0);
-                int studentId = Integer.parseInt(valueAtFirstColumn.toString());
-                System.out.println(studentId);
-                showTable();
-            }
-            isPushed = false;
-            return label;
-        }
-
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -489,7 +483,6 @@ public class StudentGUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable table;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;

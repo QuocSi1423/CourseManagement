@@ -44,9 +44,9 @@ public class OfficeAssignmentDAL implements IObjectDAL {
 
         String query = String.format(
                 "UPDATE OfficeAssignment SET "
-                + "Location = '{0}', "
-                + "Timestamp = '{1}' "
-                + "WHERE InstructorID = {2}",
+                + "Location = '%s', "
+                + "Timestamp = '%s' "
+                + "WHERE InstructorID = %d",
                 dto.getLocation(),
                 date,
                 dto.getInstrutorID());

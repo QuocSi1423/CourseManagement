@@ -6,13 +6,20 @@ package GUI.Lecturer;
 
 import BUS.CourseBUS;
 import BUS.LecturerBUS;
+import BUS.OfficeAssignmentBUS;
 import DAL.LecturerDAL;
+import DAL.OfficeAssignmentDAL;
 import DTO.LecturerDTO;
+import DTO.OfficeAssignmentDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.time.ZoneId;
 
 /**
  *
@@ -27,21 +34,33 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
     private LecturerDTO lecturerDTO;
     private String currentLocation;
     private LocalDateTime currentTimestamp;
+    private DateTimeFormatter dateTimeFormatter;
+    private LocalDateTime newDateTime;
+    private String newLocation;
+    private int lecturerId;
 
     public LecturerDetailGUI(int lecturerId) {
+        this.lecturerId = lecturerId;
         initComponents();
+
+        dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         lecturerBUS = new LecturerBUS(new LecturerDAL());
         lecturerDTO = lecturerBUS.getALecturerByID(lecturerId);
-
+        
+        
         lblFirstname.setText(lecturerDTO.getFirstName());
         lblLastname.setText(lecturerDTO.getLastName());
         lblHireDate.setText(lecturerDTO.getHireDate().toString());
         currentLocation = lecturerDTO.getOfficeAssignment().getLocation();
         currentTimestamp = lecturerDTO.getOfficeAssignment().getTimestamp();
 
+        Date date = Date.from(currentTimestamp.atZone(ZoneId.systemDefault()).toInstant());
+
         txtLocation.setText(currentLocation);
-        txtTimestamp.setText(currentTimestamp.toString());
+        jDateChooser2.setDate(date);
+        
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -76,11 +95,11 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         txtLocation = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        txtTimestamp = new javax.swing.JTextField();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jPanel10 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         jLabel3.setText("jLabel3");
 
@@ -133,10 +152,10 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jPanel5.setPreferredSize(new java.awt.Dimension(323, 61));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Họ");
+        jLabel5.setText("Họ:");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Tên");
+        jLabel6.setText("Tên:");
 
         lblLastname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -151,7 +170,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLastname)
                     .addComponent(lblFirstname))
@@ -174,7 +193,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jPanel7.setPreferredSize(new java.awt.Dimension(0, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Ngày thuê");
+        jLabel7.setText("Ngày thuê:");
 
         lblHireDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -236,6 +255,12 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Location");
 
+        txtLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLocationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -260,6 +285,8 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Timestamp");
 
+        jDateChooser2.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -268,28 +295,33 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(txtTimestamp, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(txtTimestamp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel10.setPreferredSize(new java.awt.Dimension(160, 40));
 
-        jButton1.setBackground(new java.awt.Color(11, 8, 171));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Lưu");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        jButton1.setPreferredSize(new java.awt.Dimension(75, 40));
-        jPanel10.add(jButton1);
+        btnSave.setBackground(new java.awt.Color(11, 8, 171));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
+        btnSave.setText("Lưu");
+        btnSave.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        btnSave.setPreferredSize(new java.awt.Dimension(75, 40));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnSave);
 
         jPanel11.setPreferredSize(new java.awt.Dimension(30, 40));
 
@@ -306,18 +338,18 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
 
         jPanel10.add(jPanel11);
 
-        jButton2.setBackground(new java.awt.Color(250, 7, 7));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Hủy");
-        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.setPreferredSize(new java.awt.Dimension(75, 40));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setBackground(new java.awt.Color(255, 0, 0));
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setText("Hủy");
+        btnCancel.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        btnCancel.setPreferredSize(new java.awt.Dimension(75, 40));
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
-        jPanel10.add(jButton2);
+        jPanel10.add(btnCancel);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -330,7 +362,7 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))
+                        .addGap(65, 65, 65))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -382,9 +414,42 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void txtLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_txtLocationActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        Date date = jDateChooser2.getDate();
+        jDateChooser2.setDate(date);
+        System.out.println(date);
+
+        Instant instant = date.toInstant();
+
+        newDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        newLocation = txtLocation.getText();
+        if (!txtLocation.getText().equals(currentLocation) || !newDateTime.equals(currentTimestamp)) {
+            System.out.println(lecturerId);
+            LecturerDTO lec = lecturerBUS.getALecturerByID(lecturerId);
+            System.out.println(lec.getID());
+            lec.setOfficeAssignment(new OfficeAssignmentDTO(lecturerId, newLocation, newDateTime));
+            OfficeAssignmentBUS off = new OfficeAssignmentBUS(new OfficeAssignmentDAL());
+            off.updateAOfficeAssignment(lec.getOfficeAssignment());
+            System.out.println("update");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        currentLocation = lecturerDTO.getOfficeAssignment().getLocation();
+        currentTimestamp = lecturerDTO.getOfficeAssignment().getTimestamp();
+
+        Date date = Date.from(currentTimestamp.atZone(ZoneId.systemDefault()).toInstant());
+
+        txtLocation.setText(currentLocation);
+        jDateChooser2.setDate(date);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
 
     /**
@@ -417,14 +482,15 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LecturerDetailGUI(1).setVisible(true);
+                new LecturerDetailGUI(1).setVisible(true);               
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -450,6 +516,5 @@ public class LecturerDetailGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblHireDate;
     private javax.swing.JLabel lblLastname;
     private javax.swing.JTextField txtLocation;
-    private javax.swing.JTextField txtTimestamp;
     // End of variables declaration//GEN-END:variables
 }
