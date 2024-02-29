@@ -10,10 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author ant1006
- */
 public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     private DatabaseManager db;
@@ -67,7 +63,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     @Override
     public <T> T getAnObjectByID(int objectID) {
-        String query = String.format("SELECT * FROM Person WHERE PersonID = {0}", objectID);
+        String query = String.format("SELECT * FROM Person WHERE PersonID = %d", objectID);
 
         try {
             ResultSet rsSet = db.executeQuery(query);
@@ -90,7 +86,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     @Override
     public List<LecturerDTO> getAllLecturers() {
         String query = String.format(
-                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID"
+                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID "
                 + "WHERE HireDate IS NOT NULL");
 
         return getLecturers(query);
@@ -100,9 +96,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     public List<LecturerDTO> getLecturersOfACourse(int courseID) {
         String query = String.format(
                 "SELECT p.PersonID, Lastname, Firstname, HireDate "
-                + "FROM Person p"
+                + "FROM Person p "
                 + "INNER JOIN CourseInstructor ON p.PersonID = CourseInstructor.PersonID"
-                + "WHERE CourseID = {0} "
+                + " WHERE CourseID = %d "
                 + "GROUP BY p.PersonID",
                 courseID);
 

@@ -19,7 +19,7 @@ public class InstructorDAL implements IInstructorDAL {
     public int insertInstructor(InstructorDTO instructorDTO) {
         String query = String.format(
                 "INSERT INTO CourseInstructor(`CourseID`, `PersonID`) "
-                + "VALUES ('{0}','{1}')",
+                + "VALUES ('%d','%d')",
                 instructorDTO.getCourse().getCourseID(),
                 instructorDTO.getLecturer().getID());
 
@@ -30,7 +30,7 @@ public class InstructorDAL implements IInstructorDAL {
     public int removeInstructor(InstructorDTO instructorDTO) {
         String query = String.format(
                 "DELETE FROM CourseInstructor "
-                + "WHERE CourseID = '{0}' AND PersonID = '{1}'",
+                + "WHERE CourseID = '%d' AND PersonID = '%d'",
                 instructorDTO.getCourse().getCourseID(),
                 instructorDTO.getLecturer().getID());
 
