@@ -38,5 +38,8 @@ public class LecturerBUS {
     public List<LecturerDTO> getAllLecturers() {
         return lecturerDAL.getAllLecturers();
     }
+    public List<LecturerDTO> getLecturersByName(String name){
+        return lecturerDAL.getLecturersByName(name);
+    }
 
 }

@@ -97,7 +97,7 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public Object getAnObjectByID(int objectID) {
-        String query = "SELECT * FROM `course` WHERE `course`.`CourseID` = " + objectID;
+        String query = "SELECT * FROM `course` join department on course.DepartmentID = department.DepartmentID WHERE `course`.`CourseID` = " + objectID;
         ResultSet result = this.db.executeQuery(query);
         return result;
     }

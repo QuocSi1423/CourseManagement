@@ -5,6 +5,9 @@ import DAL.IDAL.IObjectDAL;
 import DAL.IDAL.ILecturerDAL;
 import DTO.LecturerDTO;
 import DTO.OfficeAssignmentDTO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -36,30 +39,70 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
         return db.executeNonQuery(query);
     }
-
+//    public <T> int insertObject(T object) {
+//    LecturerDTO dto = (LecturerDTO) object;
+//
+//    java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
+//
+//    String query = "INSERT INTO Person (PersonID, Firstname, Lastname, HireDate, EnrollmentDate) " +
+//                   "VALUES (NULL, ?, ?, ?, NULL)";
+//
+//    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_name", "username", "password");
+//         PreparedStatement statement = connection.prepareStatement(query)) {
+//
+//        statement.setString(1, dto.getFirstName());
+//        statement.setString(2, dto.getLastName());
+//        statement.setDate(3, date);
+//
+//        return statement.executeUpdate();
+//    } catch (SQLException e) {
+//        System.out.println("Lỗi khi thực hiện truy vấn: " + e.getMessage());
+//        return 0;
+//    }
+//}
     @Override
+//    public <T> int updateObject(T object) {
+//        LecturerDTO dto = (LecturerDTO) object;
+//
+//        java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
+//
+//        String query = String.format(
+//                "UPDATE Person SET "
+//                + "Firstname = '{0}', "
+//                + "Lastname = '{1}', "
+//                + "HireDate = '{2}' "
+//                + "WHERE PersonID = {3}",
+//                dto.getFirstName(),
+//                dto.getLastName(),
+//                date,
+//                dto.getID());
+//
+//        return db.executeNonQuery(query);
+//    }
+//-------------------> Lực sửa lại hàm Update <--------------------------
     public <T> int updateObject(T object) {
-        LecturerDTO dto = (LecturerDTO) object;
+    LecturerDTO dto = (LecturerDTO) object;
 
-        java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
+    java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
 
-        String query = String.format(
-                "UPDATE Person SET "
-                + "Firstname = '{0}', "
-                + "Lastname = '{1}', "
-                + "HireDate = '{2}' "
-                + "WHERE PersonID = {3}",
-                dto.getFirstName(),
-                dto.getLastName(),
-                date,
-                dto.getID());
+    String query = "UPDATE Person SET Firstname = ?, Lastname = ?, HireDate = ? WHERE PersonID = ?";
+    try (Connection connection = db.getConnection();
+         PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, dto.getFirstName());
+        statement.setString(2, dto.getLastName());
+        statement.setDate(3, date);
+        statement.setInt(4, dto.getID());
 
-        return db.executeNonQuery(query);
+        return statement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Xử lý lỗi nếu cần thiết
+        return 0;
     }
-
+}
     @Override
     public int removeObject(int objectID) {
-        String query = String.format("DELETE FROM Person WHERE PersonID = {0}", objectID);
+        String query = String.format("DELETE FROM Person WHERE PersonID =  %d", objectID);
         return db.executeNonQuery(query);
     }
 
@@ -111,13 +154,14 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     public List<LecturerDTO> getLecturersByName(String name) {
         String query = String.format(
                 "SELECT PersonID, Lastname, Firstname, HireDate FROM Person "
-                + "WHERE HireDate IS NOT NULL "
+                + " WHERE HireDate IS NOT NULL "
                 + "AND CONCAT(Firstname,' ',Lastname,' ',Firstname) LIKE '%{0}%'", name);
-
         return getLecturers(query);
     }
 
     private List<LecturerDTO> getLecturers(String query) {
+                System.out.println(query);
+
         try {
             List<LecturerDTO> rs = new ArrayList<>();
             ResultSet rsSet = db.executeQuery(query);
@@ -128,6 +172,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
                         rsSet.getString("Lastname"),
                         rsSet.getString("Firstname"),
                         LocalDateTime.parse(rsSet.getString("HireDate"), formatter));
+               OfficeAssignmentDTO assigment= new OfficeAssignmentDTO();
+               assigment.setLocation(rsSet.getString("Location"));
+                dto.setOfficeAssignment(assigment);
 
                 rs.add(dto);
             }
@@ -135,6 +182,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
             return rs;
 
         } catch (SQLException ex) {
+            System.out.println(ex);
             return null;
         }
     }
