@@ -6,6 +6,7 @@ package BUS;
 
 import DAL.IDAL.IObjectDAL;
 import DAL.IDAL.IStudentDAL;
+import DAL.StudentDAL;
 import DTO.StudentDTO;
 import java.util.List;
 
@@ -21,10 +22,10 @@ public class StudentBUS {
     }
     
     public int insertObject(StudentDTO object) {
-        StudentDTO studentDTO = ((IObjectDAL)this.studentDAL).
+        StudentDTO studentDTO = ((StudentDAL)this.studentDAL).
                 getAnObjectByID(object.getID());
         if (studentDTO == null) 
-            return ((IObjectDAL)this.studentDAL).insertObject(studentDTO);
+            return ((IObjectDAL)this.studentDAL).insertObject(object);
        return 0;
     }
     
@@ -32,7 +33,7 @@ public class StudentBUS {
         StudentDTO studentDTO = ((IObjectDAL)this.studentDAL).
                 getAnObjectByID(object.getID());
         if (studentDTO != null) 
-            return ((IObjectDAL)this.studentDAL).updateObject(studentDTO);
+            return ((IObjectDAL)this.studentDAL).updateObject(object);
        return 0;
     }
     

@@ -46,11 +46,12 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
         String queryInsert = "INSERT INTO person (PersonID, Firstname, "
                 + "Lastname, HireDate, EnrollmentDate) "
                 + "VALUES (NULL, ?, ?, NULL, ?)";
-        java.sql.Date date = java.sql.Date.valueOf(studentDTO.getEnrollmentDate().toLocalDate());
 
         try {
+            System.out.println(object.toString());
             PreparedStatement prepareStm = connect.prepareStatement(queryInsert);
 
+            java.sql.Date date = java.sql.Date.valueOf(studentDTO.getEnrollmentDate().toLocalDate());
             prepareStm.setString(1, studentDTO.getFirstName());
             prepareStm.setString(2, studentDTO.getLastName());
             prepareStm.setDate(3, date);
@@ -113,9 +114,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
     @Override
     public List<StudentDTO> getAllStudent() {
         List<StudentDTO> studentList = new ArrayList<>();
-        String selectQuery = "SELECT * from person WHERE PersonID in "
-                + "(SELECT p.PersonID FROM person p JOIN studentgrade "
-                + "stg on p.PersonID = stg.StudentID GROUP BY p.PersonID)";
+        String selectQuery = "SELECT * FROM `PERSON` WHERE person.HireDate is NULL";
         try {
             PreparedStatement prepareStament = connect.prepareStatement(selectQuery);
             ResultSet rsSet = DB.executeQuery(selectQuery);
@@ -164,5 +163,12 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
         } catch (SQLException ex) {
             return null;
         }
+    }
+
+    public static void main(String[] args) {
+        StudentDAL studentDAL = new StudentDAL();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        StudentDTO stu = new StudentDTO(99, "a","b",localDateTime);
+        studentDAL.insertObject(stu);
     }
 }

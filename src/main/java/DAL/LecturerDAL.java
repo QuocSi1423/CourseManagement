@@ -1,8 +1,10 @@
 package DAL;
 
+import BUS.LecturerBUS;
 import DAL.IDAL.IObjectDAL;
 import DAL.IDAL.ILecturerDAL;
 import DTO.LecturerDTO;
+import DTO.OfficeAssignmentDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -63,7 +65,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     @Override
     public <T> T getAnObjectByID(int objectID) {
-        String query = String.format("SELECT * FROM Person WHERE PersonID = %d", objectID);
+        String query = String.format("SELECT * FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID WHERE Person.PersonID=%d", objectID);
 
         try {
             ResultSet rsSet = db.executeQuery(query);
@@ -76,7 +78,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
                     rsSet.getInt("PersonID"),
                     rsSet.getString("Lastname"),
                     rsSet.getString("Firstname"),
-                    LocalDateTime.parse(rsSet.getString("HireDate"), formatter));
+                    LocalDateTime.parse(rsSet.getString("HireDate"), formatter),new OfficeAssignmentDTO(rsSet.getInt("PersonID"), rsSet.getString("Location"), LocalDateTime.parse(rsSet.getString("Timestamp"),formatter)));
 
         } catch (SQLException ex) {
             return null;
