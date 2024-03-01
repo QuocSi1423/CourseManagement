@@ -2,16 +2,30 @@ package DTO;
 
 public class CourseDTO {
     private int courseID;
-    private int departmentID;
+    private DepartmentDTO department;
     private String title;
     private int credits;
+    private int type;
 
     public CourseDTO(){};
-    public CourseDTO(int courseID, int departmentID, String title, int credits){
+    public CourseDTO(int courseID, DepartmentDTO department, String title, int credits, int type){
         this.courseID = courseID;
-        this.departmentID = departmentID;
+        this.department = department;
         this.title = title;
         this.credits = credits;
+        this.type = type;
+    }
+    public CourseDTO(int courseID, DepartmentDTO department, String title, int credits){
+        this.courseID = courseID;
+        this.department = department;
+        this.title = title;
+        this.credits = credits;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type = type;
     }
     public int getCourseID() {
         return courseID;
@@ -19,11 +33,11 @@ public class CourseDTO {
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
-    public int getDepartmentID() {
-        return departmentID;
+    public DepartmentDTO getDepartment() {
+        return department;
     }
-    public void setDepartmentID(int departmentID) {
-        this.departmentID = departmentID;
+    public void setDepartment(DepartmentDTO department) {
+        this.department = department;
     }
     public String getTitle() {
         return title;

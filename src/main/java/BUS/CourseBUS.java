@@ -12,7 +12,7 @@ public class CourseBUS {
     private ICourseDAL courseDAL;
     private ILecturerDAL lecturerDAL;
 
-    public CourseBUS(ICourseDAL courseDAL, ILecture lectureDAL) {
+    public CourseBUS(ICourseDAL courseDAL, ILecturerDAL lectureDAL) {
         this.courseDAL = courseDAL;
         this.lecturerDAL = lectureDAL;
     }
@@ -38,7 +38,7 @@ public class CourseBUS {
         try {
             while(resultSet.next()) {
                 result = new CourseDTO(resultSet.getInt("CourseID"), 
-                    resultSet.getInt("DepartmentID"),
+                    new DepartmentDTO(resultSet.getInt("DepartmentID"),resultSet.getString("name")),
                     resultSet.getString("Title"), 
                     resultSet.getInt("Credits") 
                 );
