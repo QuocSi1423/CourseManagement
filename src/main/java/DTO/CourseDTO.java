@@ -21,6 +21,11 @@ public class CourseDTO {
         this.title = title;
         this.credits = credits;
     }
+    public CourseDTO(DepartmentDTO department, String title, int credits){
+        this.department = department;
+        this.title = title;
+        this.credits = credits;
+    }
     public int getType() {
         return type;
     }

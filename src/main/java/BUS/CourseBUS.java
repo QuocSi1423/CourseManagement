@@ -64,4 +64,8 @@ public class CourseBUS {
         List<LecturerDTO> result = lecturerDAL.getLecturersOfACourse(courseID);
         return result;
     }
+    public List<LecturerDTO> getLecturerNotAssignForACourse(int courseID){
+        List<LecturerDTO> result = lecturerDAL.getLecturerNotAssignForACourse(courseID);
+        return result;
+    }
 }

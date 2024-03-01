@@ -7,6 +7,7 @@ import java.util.List;
 import DAL.IDAL.*;
 import DTO.CourseDTO;
 import DTO.DepartmentDTO;
+import java.sql.SQLException;
 
 public class CourseDAL implements IObjectDAL, ICourseDAL{
     private DatabaseManager db;
@@ -63,9 +64,19 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
             course.getTitle() + "', '" + 
             course.getCredits() + "', '"+ 
             course.getDepartment().getDepartmentID() +"');";
-        int result = this.db.executeNonQuery(query);
-        return result;
+        int rowsAffected = this.db.executeNonQuery(query);
+        if(rowsAffected == 0){
+            return -1;
+        }
+        ResultSet rs = this.db.executeQuery("select last_insert_id()");
+        try {
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            return -1;
+        }
     }
+
 
     public int updateObject(Object obj) {
         CourseDTO course = (CourseDTO) obj;

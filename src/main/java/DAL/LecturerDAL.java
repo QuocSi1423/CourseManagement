@@ -12,10 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author ant1006
- */
 public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     private DatabaseManager db;
@@ -92,7 +88,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     @Override
     public List<LecturerDTO> getAllLecturers() {
         String query = String.format(
-                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID"
+                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID "
                 + "WHERE HireDate IS NOT NULL");
 
         return getLecturers(query);
@@ -102,9 +98,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     public List<LecturerDTO> getLecturersOfACourse(int courseID) {
         String query = String.format(
                 "SELECT p.PersonID, Lastname, Firstname, HireDate "
-                + "FROM Person p"
+                + "FROM Person p "
                 + "INNER JOIN CourseInstructor ON p.PersonID = CourseInstructor.PersonID"
-                + "WHERE CourseID = {0} "
+                + " WHERE CourseID = %d "
                 + "GROUP BY p.PersonID",
                 courseID);
 
@@ -142,10 +138,16 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
             return null;
         }
     }
-    
-    public static void main(String[] args) {
-        LecturerBUS lecturerBUS = new LecturerBUS(new LecturerDAL());
-        LecturerDTO lec = lecturerBUS.getALecturerByID(1);
-        System.out.println(lec.getFirstName());
+
+    @Override
+    public List<LecturerDTO> getLecturerNotAssignForACourse(int courseID) {
+        String query = String.format("select * from person"+
+                " left join courseinstructor" + 
+                " on person.PersonID = courseinstructor.PersonID"+
+                " and courseinstructor.CourseID = %d"+
+                " where person.HireDate is not null"+
+                " and courseinstructor.PersonID is null",courseID);
+
+        return getLecturers(query);
     }
 }

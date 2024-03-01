@@ -23,7 +23,7 @@ public class InstructorBUS {
         // check time conflict course instructor
         // code here
         // ...
-        return ((IObjectDAL) instructorDAL).insertObject(instructor);
+        return instructorDAL.insertInstructor(instructor);
     }
 
     public int removeAInstructor(InstructorDTO instructor) {
