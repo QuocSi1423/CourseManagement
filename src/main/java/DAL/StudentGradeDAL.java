@@ -62,12 +62,14 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
     @Override
     public <T> int updateObject(T object) {
         StudentGradeDTO studentGradeDTO = (StudentGradeDTO) object;
+      
         String updateQuery = "update studentgrade set Grade = ?, CourseID = ?, StudentID = ? WHERE EnrollmentID = ?";
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(updateQuery);
             preparedStatement.setDouble(1, studentGradeDTO.getGrade());
             preparedStatement.setDouble(2, studentGradeDTO.getCourse().getCourseID());
             preparedStatement.setInt(3, studentGradeDTO.getStudent().getID());
+            preparedStatement.setInt(4, studentGradeDTO.getEnrollmentID());
             return preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             return 0;
@@ -120,6 +122,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(selectQuery);
             preparedStatement.setInt(1, courseID);
+            System.out.println(courseID);
             System.out.println(courseID);
             ResultSet rsSet = preparedStatement.executeQuery();
             //Fix bug 
