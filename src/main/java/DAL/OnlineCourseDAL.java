@@ -12,12 +12,12 @@ public class OnlineCourseDAL implements IObjectDAL{
     private static final String password = "";
 
     public OnlineCourseDAL() {
-        this.db = new DatabaseManager(url, user, password);
+        this.db = new DatabaseManager();
     }
 
     public int insertObject(Object obj) {
         OnlineCourseDTO onlineCourse = (OnlineCourseDTO) obj;
-        String query = "INSERT INTO `onlinecourse` (`CourseID`, `url`) VALUES (" +
+        String query = "INSERT INTO `OnlineCourse` (`CourseID`, `url`) VALUES (" +
             onlineCourse.getCourseID() + ", '" + 
             onlineCourse.getUrl() + "');";
         int result = this.db.executeNonQuery(query);
@@ -26,8 +26,8 @@ public class OnlineCourseDAL implements IObjectDAL{
 
     public int updateObject(Object obj) {
         OnlineCourseDTO onlineCourse = (OnlineCourseDTO) obj;
-        String query = "UPDATE `onlinecourse` SET `url` = '" + 
-            onlineCourse.getUrl() + "' WHERE `onlinecourse`.`CourseID` = " + 
+        String query = "UPDATE `OnlineCourse` SET `url` = '" + 
+            onlineCourse.getUrl() + "' WHERE `OnlineCourse`.`CourseID` = " + 
             onlineCourse.getCourseID();
         int result = this.db.executeNonQuery(query);
         return result;
@@ -35,13 +35,13 @@ public class OnlineCourseDAL implements IObjectDAL{
 
     public int removeObject(int objectID) {
         // Department department = (Department) obj;
-        String query = "DELETE FROM `onlinecourse` WHERE `onlinecourse`.`CourseID` = " + objectID;
+        String query = "DELETE FROM `OnlineCourse` WHERE `OnlineCourse`.`CourseID` = " + objectID;
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public Object getAnObjectByID(int objectID) {
-        String query = "SELECT * FROM `onlinecourse` where `CourseID` = " + objectID;
+        String query = "SELECT * FROM `OnlineCourse` where `CourseID` = " + objectID;
         ResultSet result = this.db.executeQuery(query);
         return result;
     }

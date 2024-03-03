@@ -18,53 +18,53 @@ public class DepartmentDAL implements IObjectDAL, IDepartmentDAL{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public DepartmentDAL() {
-        this.db = new DatabaseManager(url, user, password);
+        this.db = new DatabaseManager();
     }
 
     public int insertObject(Object obj) {
-        DepartmentDTO department = (DepartmentDTO) obj;
-        String query = "INSERT INTO `department` (`DepartmentID`, `Name`, `Budget`, `StartDate`, `Administrator`) VALUES ('" +
-             department.getDepartmentID() + "', '" + 
-             department.getName() + "', '" + 
-             department.getBudget() + "', '" + 
-             department.getStartDate() + "', '"+ 
-             department.getAdministrator() +"');";
+        DepartmentDTO Department = (DepartmentDTO) obj;
+        String query = "INSERT INTO `Department` (`DepartmentID`, `Name`, `Budget`, `StartDate`, `Administrator`) VALUES ('" +
+             Department.getDepartmentID() + "', '" + 
+             Department.getName() + "', '" + 
+             Department.getBudget() + "', '" + 
+             Department.getStartDate() + "', '"+ 
+             Department.getAdministrator() +"');";
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public int updateObject(Object obj) {
-        DepartmentDTO department = (DepartmentDTO) obj;
-        String query = "UPDATE `department` SET `Name` = '" + 
-            department.getName() + "', `Budget` = " + 
-            department.getBudget() + ", `StartDate` = '" + 
-            department.getStartDate() + "', `Administrator` = '" + 
-            department.getAdministrator() +"' WHERE `department`.`DepartmentID` = " + 
-            department.getDepartmentID();
+        DepartmentDTO Department = (DepartmentDTO) obj;
+        String query = "UPDATE `Department` SET `Name` = '" + 
+            Department.getName() + "', `Budget` = " + 
+            Department.getBudget() + ", `StartDate` = '" + 
+            Department.getStartDate() + "', `Administrator` = '" + 
+            Department.getAdministrator() +"' WHERE `Department`.`DepartmentID` = " + 
+            Department.getDepartmentID();
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public int removeObject(int objectID) {
-        // Department department = (Department) obj;
-        String query = "DELETE FROM `department` WHERE `department`.`DepartmentID` = " + objectID;
+        // Department Department = (Department) obj;
+        String query = "DELETE FROM `Department` WHERE `Department`.`DepartmentID` = " + objectID;
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public DepartmentDTO getAnObjectByID(int objectID) {
-        String query = "SELECT * FROM `department` WHERE `department`.`DepartmentID` = " + objectID;
+        String query = "SELECT * FROM `Department` WHERE `Department`.`DepartmentID` = " + objectID;
         ResultSet result = this.db.executeQuery(query);
-        DepartmentDTO department = null;
+        DepartmentDTO Department = null;
         try {
             while(result.next()) {
-                department = new DepartmentDTO(result.getInt("DepartmentID"), 
+                Department = new DepartmentDTO(result.getInt("DepartmentID"), 
                     result.getString("Name"), 
                     result.getDouble("Budget"), 
                     LocalDateTime.parse(result.getString("StartDate"), formatter),  
                     result.getInt("Administrator"));
             }
-            return department;
+            return Department;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -72,20 +72,20 @@ public class DepartmentDAL implements IObjectDAL, IDepartmentDAL{
     }
 
     public List<DepartmentDTO> getAllDepartments() {
-        String query = "SELECT * FROM `department`";
+        String query = "SELECT * FROM `Department`";
         ResultSet result = this.db.executeQuery(query);
         
-        List<DepartmentDTO> departments = new ArrayList<>();
+        List<DepartmentDTO> Departments = new ArrayList<>();
         try {
             
             while(result.next()) {
-                departments.add(new DepartmentDTO(result.getInt("DepartmentID"), 
+                Departments.add(new DepartmentDTO(result.getInt("DepartmentID"), 
                     result.getString("Name"), 
                     result.getDouble("Budget"), 
                     LocalDateTime.parse(result.getString("StartDate"), formatter),  
                     result.getInt("Administrator")));
             }
-            return departments;
+            return Departments;
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             return null;

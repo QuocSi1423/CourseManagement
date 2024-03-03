@@ -140,7 +140,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     @Override
     public List<LecturerDTO> getLecturersOfACourse(int courseID) {
         String query = String.format(
-                "SELECT p.PersonID, Lastname, Firstname, HireDate "
+                "SELECT * "
                 + "FROM Person p "
                 + "INNER JOIN CourseInstructor ON p.PersonID = CourseInstructor.PersonID"
                 + " WHERE CourseID = %d "
@@ -172,9 +172,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
                         rsSet.getString("Lastname"),
                         rsSet.getString("Firstname"),
                         LocalDateTime.parse(rsSet.getString("HireDate"), formatter));
-               OfficeAssignmentDTO assigment= new OfficeAssignmentDTO();
-               assigment.setLocation(rsSet.getString("Location"));
-                dto.setOfficeAssignment(assigment);
+            //    OfficeAssignmentDTO assigment= new OfficeAssignmentDTO();
+            //    assigment.setLocation(rsSet.getString("Location"));
+            //     dto.setOfficeAssignment(assigment);
 
                 rs.add(dto);
             }

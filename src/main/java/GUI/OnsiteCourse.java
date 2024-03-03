@@ -9,6 +9,7 @@ import BUS.DepartmentBUS;
 import BUS.OnlineCourseBUS;
 import BUS.OnsiteCourseBUS;
 import DAL.CourseDAL;
+import DAL.DepartmentDAL;
 import DAL.LecturerDAL;
 import DAL.OnsiteCourseDAL;
 import DTO.CourseDTO;
@@ -43,9 +44,15 @@ public class OnsiteCourse extends javax.swing.JFrame {
      */
     public OnsiteCourse( int courseID) {
         initComponents();
-        setData();
+        onCouDal = new OnsiteCourseDAL();
         onCouBus= new OnsiteCourseBUS(onCouDal);
+        couDal = new CourseDAL();
+        lecDal = new LecturerDAL();
         couBus= new CourseBUS(couDal, lecDal);
+        depBus = new DepartmentBUS(new DepartmentDAL());
+        DepartmentID = new ArrayList<>();
+        this.courseID = courseID;
+        setData();
     }
 
     /**
@@ -143,7 +150,6 @@ public class OnsiteCourse extends javax.swing.JFrame {
         tfSoTinChi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         cbKhoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbKhoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbKhoa.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbKhoaItemStateChanged(evt);
@@ -411,7 +417,7 @@ public class OnsiteCourse extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) tbDanhSach.getModel();
     model.setRowCount(0); // Reset bảng bằng cách xóa tất cả các hàng
     for (LecturerDTO lecturer : listLecturer) {
-        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), lecturer.getOfficeAssignment().getLocation()};
+        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), "null"};
         model.addRow(rowData);
     }
 
@@ -458,7 +464,7 @@ public class OnsiteCourse extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OnsiteCourse(1045).setVisible(true);  // Truyền CourseID vào khi khởi tạo OnsiteCourse
+                new OnsiteCourse(2042).setVisible(true);  // Truyền CourseID vào khi khởi tạo OnsiteCourse
             }
         });
     }

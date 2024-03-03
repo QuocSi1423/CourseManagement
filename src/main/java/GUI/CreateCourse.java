@@ -1,28 +1,36 @@
 package GUI;
 
+import java.awt.Color;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import BUS.CourseBUS;
 import BUS.DepartmentBUS;
 import BUS.OnlineCourseBUS;
 import BUS.OnsiteCourseBUS;
 import DAL.CourseDAL;
 import DAL.DepartmentDAL;
-import DAL.IDAL.ICourseDAL;
-import DAL.IDAL.IDepartmentDAL;
-import DAL.IDAL.ILecturerDAL;
-import DAL.IDAL.IObjectDAL;
 import DAL.LecturerDAL;
 import DAL.OnlineCourseDAL;
 import DAL.OnsiteCourseDAL;
+import DAL.IDAL.IObjectDAL;
 import DTO.CourseDTO;
 import DTO.DepartmentDTO;
-import DTO.LecturerDTO;
 import DTO.OnlineCourseDTO;
 import DTO.OnsiteCourseDTO;
-import java.awt.Color;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatPropertiesLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.ui.*;
+import com.formdev.flatlaf.ui.FlatInternalFrameUI.FlatInternalFrameBorder;
 
 public class CreateCourse extends javax.swing.JFrame {
     private ArrayList<DepartmentDTO> listDepartments = new ArrayList<>();
@@ -81,8 +89,8 @@ public class CreateCourse extends javax.swing.JFrame {
         jLabel1.setText("TẠO KHÓA HỌC");
         jLabel1.setToolTipText("");
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
         jPanel1.setToolTipText("");
         jPanel1.setMaximumSize(new java.awt.Dimension(811, 330));
 
@@ -111,11 +119,6 @@ public class CreateCourse extends javax.swing.JFrame {
         CreditsJTF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 checkCreditsInput(evt);
-            }
-        });
-        CreditsJTF.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                test(evt);
             }
         });
 
@@ -321,11 +324,8 @@ public class CreateCourse extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkCreditsInput
 
-    private void test(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_test
-        System.out.println("hello");
-    }//GEN-LAST:event_test
-
     public static void main(String args[]) {
+        FlatMacLightLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CreateCourse().setVisible(true);

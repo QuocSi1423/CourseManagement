@@ -54,14 +54,15 @@ public class AddStudentsGUI extends javax.swing.JFrame {
     StudentGradeDAL studentGradeDAL = new StudentGradeDAL(studentDAL, courseDAL);
     StudentBUS studentBUS = new StudentBUS(studentDAL);
     StudentGradeBUS studenGradeBUS = new StudentGradeBUS(studentGradeDAL, courseDAL);
-    ArrayList<StudentDTO> listStudent = new ArrayList<>();
-    ArrayList<StudentDTO> list = new ArrayList();
+    List<StudentDTO> listStudent = new ArrayList<>();
+    List<StudentDTO> list = new ArrayList<>();
     int courceID = 1045;
 
     /**
      * Creates new form AddStudentsGUI
      */
     public AddStudentsGUI() {
+        list = new ArrayList<>();
         initComponents();
         loadDataToAddedTable();
         loadDataToListTable();
@@ -224,7 +225,7 @@ public class AddStudentsGUI extends javax.swing.JFrame {
                     int studentID = Integer.parseInt(model.getValueAt(row, 0).toString());
                     StudentDTO student = (StudentDTO) studentBUS.getAnObjectByID(studentID);
                     CourseDTO cource = (CourseDTO) courseBUS.getACourseByID(courceID);
-                    StudentGradeDTO studentGradeDTO = new StudentGradeDTO(0, 0.0, student, cource);
+                    StudentGradeDTO studentGradeDTO = new StudentGradeDTO(0, 0.0, new StudentDTO(studentID), cource);
                     studenGradeBUS.insertObject(studentGradeDTO);
                 }
             }
@@ -341,7 +342,7 @@ public class AddStudentsGUI extends javax.swing.JFrame {
     }
 
     private void loadDataToAddedTable() {
-        list = (ArrayList<StudentDTO>) studentBUS.getAllStudentsOfACourse(courceID);
+        list = studentBUS.getAllStudentsOfACourse(courceID);
         Collections.sort(list, Comparator.comparingInt(StudentDTO::getID));
         DefaultTableModel model = new DefaultTableModel() {
             @Override

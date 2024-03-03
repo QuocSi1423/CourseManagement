@@ -16,23 +16,23 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     private static final String password = "";
 
     public CourseDAL() {
-        this.db = new DatabaseManager(url, user, password);
+        this.db = new DatabaseManager();
     }
 
     public List<CourseDTO> getAllCourses() {
         String query = "SELECT * FROM `Course` join `Department` on Course.DepartmentID = Department.DepartmentID left join OnlineCourse on Course.CourseID = OnlineCourse.CourseID";
         ResultSet result = this.db.executeQuery(query);
-        List<CourseDTO> courses = new ArrayList<>();
+        List<CourseDTO> Courses = new ArrayList<>();
         try {
             while(result.next()) { 
-                courses.add(new CourseDTO(result.getInt("CourseID"), 
+                Courses.add(new CourseDTO(result.getInt("CourseID"), 
                     new DepartmentDTO(result.getInt("DepartmentID"), result.getString("Name")),
                     result.getString("Title"), 
                     result.getInt("Credits") ,
                     result.getString("url") != null ? 1 : 0
                     ));
             }
-            return courses;
+            return Courses;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -40,18 +40,18 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public List<CourseDTO> getCoursesByTitle(String title) {
-        String query = "SELECT * FROM `Course` where `course`.`Title` = '" + title + "'";
+        String query = "SELECT * FROM `Course` where `Course`.`Title` = '" + title + "'";
         ResultSet result = this.db.executeQuery(query);
-        List<CourseDTO> courses = new ArrayList<>();
+        List<CourseDTO> Courses = new ArrayList<>();
         try {
             while(result.next()) {
-                courses.add(new CourseDTO(result.getInt("CourseID"), 
+                Courses.add(new CourseDTO(result.getInt("CourseID"), 
                 new DepartmentDTO(),
                 result.getString("Title"), 
                 result.getInt("Credits") 
                 ));
             }
-            return courses;
+            return Courses;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -59,11 +59,11 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
     }
 
     public int insertObject(Object obj) {
-        CourseDTO course = (CourseDTO) obj;
-        String query = "INSERT INTO `course` (`CourseID`, `Title`, `Credits`, `DepartmentID`) VALUES (NULL, " + "'" +
-            course.getTitle() + "', '" + 
-            course.getCredits() + "', '"+ 
-            course.getDepartment().getDepartmentID() +"');";
+        CourseDTO Course = (CourseDTO) obj;
+        String query = "INSERT INTO `Course` (`CourseID`, `Title`, `Credits`, `DepartmentID`) VALUES (NULL, " + "'" +
+            Course.getTitle() + "', '" + 
+            Course.getCredits() + "', '"+ 
+            Course.getDepartment().getDepartmentID() +"');";
         int rowsAffected = this.db.executeNonQuery(query);
         if(rowsAffected == 0){
             return -1;
@@ -79,25 +79,25 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
 
 
     public int updateObject(Object obj) {
-        CourseDTO course = (CourseDTO) obj;
-        String query = "UPDATE `course` SET `Title` = '" + 
-            course.getTitle() + "', `Credits` = " + 
-            course.getCredits() + ", `DepartmentID` = '" + 
-            course.getDepartment().getDepartmentID() + "' where `CourseID` = '" +
-            course.getCourseID() + "'";
+        CourseDTO Course = (CourseDTO) obj;
+        String query = "UPDATE `Course` SET `Title` = '" + 
+            Course.getTitle() + "', `Credits` = " + 
+            Course.getCredits() + ", `DepartmentID` = '" + 
+            Course.getDepartment().getDepartmentID() + "' where `CourseID` = '" +
+            Course.getCourseID() + "'";
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public int removeObject(int objectID) {
         // Department department = (Department) obj;
-        String query = "DELETE FROM `course` WHERE `course`.`CourseID` = " + objectID;
+        String query = "DELETE FROM `Course` WHERE `Course`.`CourseID` = " + objectID;
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public Object getAnObjectByID(int objectID) {
-        String query = "SELECT * FROM `course` join department on course.DepartmentID = department.DepartmentID WHERE `course`.`CourseID` = " + objectID;
+        String query = "SELECT * FROM `Course` join Department on Course.DepartmentID = Department.DepartmentID WHERE `Course`.`CourseID` = " + objectID;
         ResultSet result = this.db.executeQuery(query);
         return result;
     }

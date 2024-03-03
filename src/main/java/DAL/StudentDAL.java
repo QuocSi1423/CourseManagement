@@ -35,7 +35,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public StudentDAL() {
-        this.DB = new DatabaseManager(url, user, password);
+        this.DB = new DatabaseManager();
         this.connect = this.DB.getConnection();
     }
 
@@ -114,7 +114,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
     @Override
     public List<StudentDTO> getAllStudent() {
         List<StudentDTO> studentList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `PERSON` WHERE person.HireDate is NULL";
+        String selectQuery = "SELECT * FROM `Person` WHERE Person.HireDate is NULL";
         try {
             PreparedStatement prepareStament = connect.prepareStatement(selectQuery);
             ResultSet rsSet = DB.executeQuery(selectQuery);
@@ -140,7 +140,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
     @Override
     public List<StudentDTO> getAllStudentsOfACourse(int courseID) {
         List<StudentDTO> studentList = new ArrayList<>();
-        String selectQuery = "select * FROM person WHERE PersonID in (SELECT stg.StudentID FROM studentgrade stg WHERE stg.CourseID = ? GROUP BY stg.StudentID)";
+        String selectQuery = "select * FROM Person WHERE PersonID in (SELECT stg.StudentID FROM StudentGrade stg WHERE stg.CourseID = ? GROUP BY stg.StudentID)";
         try {
             PreparedStatement prepareStament = connect.prepareStatement(selectQuery);
             prepareStament.setInt(1, courseID);

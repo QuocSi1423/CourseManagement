@@ -390,7 +390,7 @@ private void setTable() {
     tbDanhSach.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
 
     for (LecturerDTO lecturer : listLecturer) {
-        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), lecturer.getOfficeAssignment().getLocation(), lecturer.gethireDate(), " "};
+        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), "null", lecturer.gethireDate(), " "};
         model.addRow(rowData);
     }
 

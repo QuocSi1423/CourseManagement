@@ -10,9 +10,9 @@ import java.sql.Statement;
 public class DatabaseManager {
     private Connection connection;
 
-    private static String url = "jdbc:mysql://localhost:3306/school";
+    private static String url = "jdbc:mysql://localhost:3306/School";
     private static String user = "root";
-    private static String password = "";
+    private static String password = "qwerty..";
 
     public DatabaseManager() {
         init();

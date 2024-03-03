@@ -4,6 +4,7 @@
  */
 package GUI;
 
+
 import BUS.CourseBUS;
 import BUS.DepartmentBUS;
 import BUS.LecturerBUS;
@@ -383,7 +384,7 @@ public class OnlineCourse extends javax.swing.JFrame {
     DefaultTableModel model = (DefaultTableModel) tbDanhSach.getModel();
     model.setRowCount(0); // Reset bảng bằng cách xóa tất cả các hàng
     for (LecturerDTO lecturer : listLecturer) {
-        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), lecturer.getOfficeAssignment().getLocation()};
+        Object[] rowData = {lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(), "null"};
         model.addRow(rowData);
     }
 
@@ -443,7 +444,6 @@ public class OnlineCourse extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(OnlineCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

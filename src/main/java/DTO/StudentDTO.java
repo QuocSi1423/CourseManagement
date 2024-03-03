@@ -13,6 +13,10 @@ public class StudentDTO extends PersonDTO{
         this.enrollmentDate = enrollmentDate;
     }
 
+    public StudentDTO(int studentID){
+        this.setID(studentID);
+    }
+
     public LocalDateTime getEnrollmentDate() {
         return enrollmentDate;
     }

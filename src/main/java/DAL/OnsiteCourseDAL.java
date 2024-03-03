@@ -7,9 +7,9 @@ import DTO.*;
 
 public class OnsiteCourseDAL implements IObjectDAL{
     private DatabaseManager db;
-    private static final String url = "jdbc:mysql://localhost:3306/school";
+    private static final String url = "jdbc:mysql://localhost:3306/School";
     private static final String user = "root";
-    private static final String password = "";
+    private static final String password = "qwerty..";
 
     public OnsiteCourseDAL() {
         this.db = new DatabaseManager(url, user, password);
@@ -18,7 +18,7 @@ public class OnsiteCourseDAL implements IObjectDAL{
     public int insertObject(Object obj) {
         OnsiteCourseDTO onsiteCourse = (OnsiteCourseDTO) obj;
         // 1050', 'aaa', 'FS', '15:30')
-        String query = "INSERT INTO `onsitecourse` (`CourseID`, `Location`, `Days`, `Time`) VALUES ('" +
+        String query = "INSERT INTO `OnsiteCourse` (`CourseID`, `Location`, `Days`, `Time`) VALUES ('" +
             onsiteCourse.getCourseID() + "', '" + 
             onsiteCourse.getLocation() + "', '" +
             onsiteCourse.getDays() +  "', '" +
@@ -30,11 +30,11 @@ public class OnsiteCourseDAL implements IObjectDAL{
 
     public int updateObject(Object obj) {
         OnsiteCourseDTO onsiteCourse = (OnsiteCourseDTO) obj;
-        String query = "UPDATE `onsitecourse` SET `Location` = '" + 
+        String query = "UPDATE `OnsiteCourse` SET `Location` = '" + 
             onsiteCourse.getLocation() + "', `Days` = '" +
             onsiteCourse.getDays() + "', `Time` = '" +
             onsiteCourse.getTime() + 
-            "' WHERE `onsitecourse`.`CourseID` = " + 
+            "' WHERE `OnsiteCourse`.`CourseID` = " + 
             onsiteCourse.getCourseID();
         // System.out.println(query);
         int result = this.db.executeNonQuery(query);
@@ -43,13 +43,14 @@ public class OnsiteCourseDAL implements IObjectDAL{
 
     public int removeObject(int objectID) {
         // Department department = (Department) obj;
-        String query = "DELETE FROM `onsitecourse` WHERE `onsitecourse`.`CourseID` = " + objectID;
+        String query = "DELETE FROM `OnsiteCourse` WHERE `OnsiteCourse`.`CourseID` = " + objectID;
         int result = this.db.executeNonQuery(query);
         return result;
     }
 
     public Object getAnObjectByID(int objectID) {
-        String query = "SELECT * FROM `onsitecourse` where `CourseID` = " + objectID;
+        String query = "SELECT * FROM OnsiteCourse where `CourseID` = " + objectID;
+        System.out.println(query);
         ResultSet result = this.db.executeQuery(query);
         return result;
     }

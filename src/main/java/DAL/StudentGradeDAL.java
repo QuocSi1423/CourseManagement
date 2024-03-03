@@ -37,7 +37,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
     private ICourseDAL courseDAL;
 
     public StudentGradeDAL(IStudentDAL studentDAL, ICourseDAL courseDAL) {
-        this.DB = new DatabaseManager(url, user, password);
+        this.DB = new DatabaseManager();
         this.connect = this.DB.getConnection();
         this.studentDAL = studentDAL;
         this.courseDAL = courseDAL;
@@ -128,10 +128,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
             //Fix bug 
             CourseDTO course = new CourseDTO();
             while (rsSet.next()) {
-                int studentID = rsSet.getInt("StudentID");
-                StudentDTO student = ((IObjectDAL) studentDAL)
-                        .getAnObjectByID(studentID);
-
+                StudentDTO student = new StudentDTO(rsSet.getInt("ourseID"), rsSet.getString("LastName"), rsSet.getString("FirstName"),null);
                 studentGradeList.add(new StudentGradeDTO(rsSet.getInt("EnrollmentID"),
                         rsSet.getDouble("Grade"), student, course));
             }
