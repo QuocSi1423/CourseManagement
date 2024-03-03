@@ -7,6 +7,7 @@ import GUI.CreateCourse;
 import GUI.Main;
 import GUI.QuanLyGiangVien;
 import GUI.QuanLyGiangVienPanel;
+import GUI.pointmanagement;
 import io.github.cdimascio.dotenv.Dotenv;
 /**
  * Hello world!
@@ -17,6 +18,6 @@ public class App
     public static void main( String[] args )
     {
         FlatMacLightLaf.setup();
-        new AddStudentsGUI().setVisible(true);
+        new pointmanagement(1045).setVisible(true);
     }
 }

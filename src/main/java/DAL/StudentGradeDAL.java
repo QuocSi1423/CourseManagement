@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,8 +128,10 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
             ResultSet rsSet = preparedStatement.executeQuery();
             //Fix bug 
             CourseDTO course = new CourseDTO();
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Predefined formatter for ISO 8601
+
             while (rsSet.next()) {
-                StudentDTO student = new StudentDTO(rsSet.getInt("ourseID"), rsSet.getString("LastName"), rsSet.getString("FirstName"),null);
+                StudentDTO student = new StudentDTO(rsSet.getInt("ourseID"), rsSet.getString("LastName"), rsSet.getString("FirstName"),LocalDateTime.parse(rsSet.getString("EnrollmentDate"), formatter));
                 studentGradeList.add(new StudentGradeDTO(rsSet.getInt("EnrollmentID"),
                         rsSet.getDouble("Grade"), student, course));
             }
