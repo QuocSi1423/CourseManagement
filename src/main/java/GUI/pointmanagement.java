@@ -148,23 +148,22 @@ public class pointmanagement extends javax.swing.JFrame {
    
 }
     
-   public void search(List<StudentDTO> listStudent) {
+public void search(List<StudentDTO> listStudent) {
     List<StudentDTO> list = new ArrayList<>();
-    String text = Search.getText().toLowerCase();
-   if(text==""){
-       showall(listStudent, listdiem);
-   }
-   else
-   
-    for (int i = 0; i < listStudent.size(); i++) {
-        String title = listStudent.get(i).getLastName(); // Chuyển đổi chuỗi trong đối tượng CourseDTO về chữ thường
-        if (title.contains(text)) {
-            list.add(listStudent.get(i));
-        }
+ String text = Search.getText().toLowerCase();
+ if (text.isEmpty()) {
+     showall(listStudent, listdiem);
+ } else {
+     for (int i = 0; i < listStudent.size(); i++) {
+         String title = listStudent.get(i).getLastName().toLowerCase();
+         if (title.contains(text)) {
+             list.add(listStudent.get(i));
+         }
+     }
+     showall(list, listdiem);
     }
-       showall(list, listdiem);
-  
-    }
+
+}
    public void update(int idstd){
      
        int iddiem=0;

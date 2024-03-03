@@ -46,12 +46,11 @@ public class StudentGradeBUS {
     }
 
     public int removeObject(int objectID) {
-        StudentGradeDTO studentGradeDTO = ((IObjectDAL) this.studentGradeDAL).
-                getAnObjectByID(objectID);
-        if (studentGradeDTO != null) {
-            return ((IObjectDAL) studentGradeDAL).removeObject(studentGradeDTO.getEnrollmentID());
-        }
-        return 0;
+        return ((IObjectDAL) studentGradeDAL).removeObject(objectID);
+        // StudentGradeDTO studentGradeDTO = ((IObjectDAL) this.studentGradeDAL).
+        //         getAnObjectByID(objectID);
+        // if (studentGradeDTO != null) {
+        // }
     }
     
     public <T> T getAnObjectByID(int objectID) {

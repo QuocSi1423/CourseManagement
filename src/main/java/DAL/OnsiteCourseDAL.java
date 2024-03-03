@@ -15,6 +15,10 @@ public class OnsiteCourseDAL implements IObjectDAL{
         this.db = new DatabaseManager(url, user, password);
     }
 
+    public OnsiteCourseDAL(DatabaseManager db)
+    {
+        this.db = db;
+    }
     public int insertObject(Object obj) {
         OnsiteCourseDTO onsiteCourse = (OnsiteCourseDTO) obj;
         // 1050', 'aaa', 'FS', '15:30')

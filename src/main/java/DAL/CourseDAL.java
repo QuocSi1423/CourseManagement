@@ -19,6 +19,11 @@ public class CourseDAL implements IObjectDAL, ICourseDAL{
         this.db = new DatabaseManager();
     }
 
+    public CourseDAL(DatabaseManager db)
+    {
+        this.db = db;
+    }
+
     public List<CourseDTO> getAllCourses() {
         String query = "SELECT * FROM `Course` join `Department` on Course.DepartmentID = Department.DepartmentID left join OnlineCourse on Course.CourseID = OnlineCourse.CourseID";
         ResultSet result = this.db.executeQuery(query);

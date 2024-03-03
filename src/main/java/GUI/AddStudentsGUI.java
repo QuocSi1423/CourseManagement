@@ -313,6 +313,9 @@ public class AddStudentsGUI extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Xóa thành công!");
                         loadDataToAddedTable();
                         loadDataToListTable();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Không thành công!");
+
                     }
                 }
             }
@@ -402,6 +405,7 @@ public class AddStudentsGUI extends javax.swing.JFrame {
     }
 
     private void loadDataToListTable() {
+        jTable_ListOfStudent.setRowSorter(null);
         jTable_ListOfStudent.setRowSelectionAllowed(true);
         jTable_ListOfStudent.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listStudent = (ArrayList<StudentDTO>) studentBUS.getAllStudent();

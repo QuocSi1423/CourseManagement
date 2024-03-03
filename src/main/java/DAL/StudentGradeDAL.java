@@ -47,7 +47,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
     @Override
     public <T> int insertObject(T object) {
         StudentGradeDTO studentGradeDTO = (StudentGradeDTO) object;
-        String insertQuery = "INSERT INTO studentgrade (EnrollmentID, CourseID, StudentID, Grade) VALUES (null, ?, ?, ?)";
+        String insertQuery = "INSERT INTO StudentGrade (EnrollmentID, CourseID, StudentID, Grade) VALUES (null, ?, ?, ?)";
         try {
             //Fix bug Insert
             PreparedStatement preparedStatement = connect.prepareStatement(insertQuery);
@@ -64,7 +64,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
     public <T> int updateObject(T object) {
         StudentGradeDTO studentGradeDTO = (StudentGradeDTO) object;
       
-        String updateQuery = "update studentgrade set Grade = ?, CourseID = ?, StudentID = ? WHERE EnrollmentID = ?";
+        String updateQuery = "update StudentGrade set Grade = ?, CourseID = ?, StudentID = ? WHERE EnrollmentID = ?";
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(updateQuery);
             preparedStatement.setDouble(1, studentGradeDTO.getGrade());
@@ -80,7 +80,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
 
     @Override
     public int removeObject(int objectID) {
-        String deleteQuery = "Delete from studentgrade WHERE EnrollmentID = ?";
+        String deleteQuery = "Delete from StudentGrade WHERE EnrollmentID = ?";
         try {
             PreparedStatement preparedStatement = connect.prepareCall(deleteQuery);
             preparedStatement.setInt(1, objectID);
@@ -92,7 +92,7 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
 
     @Override
     public <T> T getAnObjectByID(int objectID) {
-        String selectQuery = "SELECT * FROM studentgrade WHERE EnrollmentID = ?";
+        String selectQuery = "SELECT * FROM StudentGrade WHERE EnrollmentID = ?";
         StudentGradeDTO studentGradeDTO = null;
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(selectQuery);
@@ -128,13 +128,13 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
             ResultSet rsSet = preparedStatement.executeQuery();
             //Fix bug 
             CourseDTO course = new CourseDTO();
-            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Predefined formatter for ISO 8601
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
             while (rsSet.next()) {
-                StudentDTO student = new StudentDTO(rsSet.getInt("ourseID"), rsSet.getString("LastName"), rsSet.getString("FirstName"),LocalDateTime.parse(rsSet.getString("EnrollmentDate"), formatter));
+                StudentDTO student = new StudentDTO(rsSet.getInt("StudentID"), rsSet.getString("LastName"), rsSet.getString("FirstName"),null);
                 studentGradeList.add(new StudentGradeDTO(rsSet.getInt("EnrollmentID"),
                         rsSet.getDouble("Grade"), student, course));
-            }
+                    }
             return studentGradeList;
         } catch (SQLException ex) {
             return studentGradeList;

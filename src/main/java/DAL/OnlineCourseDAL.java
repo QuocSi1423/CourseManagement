@@ -14,7 +14,9 @@ public class OnlineCourseDAL implements IObjectDAL{
     public OnlineCourseDAL() {
         this.db = new DatabaseManager();
     }
-
+    public OnlineCourseDAL(DatabaseManager db){
+        this.db = db;
+    }
     public int insertObject(Object obj) {
         OnlineCourseDTO onlineCourse = (OnlineCourseDTO) obj;
         String query = "INSERT INTO `OnlineCourse` (`CourseID`, `url`) VALUES (" +

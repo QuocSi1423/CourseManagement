@@ -16,6 +16,8 @@ public class OnsiteCourseBUS {
         this.onsiteCourseDAL = onsiteCourseDAL;
     }
 
+    
+
     public int createAnOnsiteCourse(OnsiteCourseDTO course) {
         int result = ((OnsiteCourseDAL) this.onsiteCourseDAL).insertObject(course);
         return result;
