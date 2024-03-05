@@ -19,8 +19,7 @@ public class LecturerBUS {
     }
 
     public int createALecturer(LecturerDTO lecturer) {
-        LecturerDTO lecturerDTO = ((IObjectDAL) lecturerDAL).getAnObjectByID(lecturer.getID());
-        return lecturerDTO != null ? 0 : ((IObjectDAL) lecturerDAL).insertObject(lecturerDTO);
+        return ((IObjectDAL) lecturerDAL).insertObject(lecturer);
     }
 
     public int updateALecturer(LecturerDTO lecturer) {

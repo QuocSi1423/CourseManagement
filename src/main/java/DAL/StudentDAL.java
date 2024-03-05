@@ -43,7 +43,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
     public <T> int insertObject(T object) {
         StudentDTO studentDTO = (StudentDTO) object;
     
-        String queryInsert = "INSERT INTO person (PersonID, Firstname, "
+        String queryInsert = "INSERT INTO Person (PersonID, Firstname, "
                 + "Lastname, HireDate, EnrollmentDate) "
                 + "VALUES (NULL, ?, ?, NULL, ?)";
 
@@ -81,7 +81,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
 
     @Override
     public int removeObject(int objectID) {
-        String deleteQuery = "Delete from person WHERE PersonID = ?";
+        String deleteQuery = "Delete from Person WHERE PersonID = ?";
         try {
             PreparedStatement prepareStatement = connect.prepareStatement(deleteQuery);
             prepareStatement.setInt(1, objectID);
@@ -93,7 +93,7 @@ public class StudentDAL implements IObjectDAL, IStudentDAL {
 
     @Override
     public <T> T getAnObjectByID(int objectID) {
-        String selectQuery = "SELECT * FROM `person` WHERE PersonID = ?";
+        String selectQuery = "SELECT * FROM `Person` WHERE PersonID = ?";
         StudentDTO studentRS = null;
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(selectQuery);

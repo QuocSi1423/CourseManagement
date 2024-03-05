@@ -37,10 +37,10 @@ public class AssignmentManagement extends javax.swing.JFrame {
     private DefaultTableModel unassignedTableModel;
     private int selectedRowUnassignedTable;
     
-    public AssignmentManagement() {
+    public AssignmentManagement(int courceID) {
         initComponents();
         // lấy tạm thời một khóa học để test
-        this.courseDTO = courseBUS.getACourseByID(4022);
+        this.courseDTO = courseBUS.getACourseByID(courceID);
         //
         tableInitialization();
     }
@@ -202,13 +202,7 @@ public class AssignmentManagement extends javax.swing.JFrame {
         this.UnassignedJT.clearSelection();
     }//GEN-LAST:event_deselection
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AssignmentManagement().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable AssignedJT;

@@ -32,7 +32,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
         String query = String.format(
                 "INSERT INTO Person (PersonID, Firstname, Lastname, HireDate, EnrollmentDate) "
-                + "VALUES (NULL, '{0}', '{1}', '{2}', NULL)",
+                + "VALUES (NULL, '%s', '%s', '%s', NULL)",
                 dto.getFirstName(),
                 dto.getLastName(),
                 date);
@@ -61,45 +61,45 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 //    }
 //}
     @Override
-//    public <T> int updateObject(T object) {
-//        LecturerDTO dto = (LecturerDTO) object;
-//
-//        java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
-//
-//        String query = String.format(
-//                "UPDATE Person SET "
-//                + "Firstname = '{0}', "
-//                + "Lastname = '{1}', "
-//                + "HireDate = '{2}' "
-//                + "WHERE PersonID = {3}",
-//                dto.getFirstName(),
-//                dto.getLastName(),
-//                date,
-//                dto.getID());
-//
-//        return db.executeNonQuery(query);
-//    }
+   public <T> int updateObject(T object) {
+       LecturerDTO dto = (LecturerDTO) object;
+
+       java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
+
+       String query = String.format(
+               "UPDATE Person SET "
+               + "Firstname = '%s', "
+               + "Lastname = '%s', "
+               + "HireDate = '%s' "
+               + "WHERE PersonID = %d",
+               dto.getFirstName(),
+               dto.getLastName(),
+               date,
+               dto.getID());
+
+       return db.executeNonQuery(query);
+   }
 //-------------------> Lực sửa lại hàm Update <--------------------------
-    public <T> int updateObject(T object) {
-    LecturerDTO dto = (LecturerDTO) object;
+//     public <T> int updateObject(T object) {
+//     LecturerDTO dto = (LecturerDTO) object;
 
-    java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
+//     java.sql.Date date = java.sql.Date.valueOf(dto.gethireDate().toLocalDate());
 
-    String query = "UPDATE Person SET Firstname = ?, Lastname = ?, HireDate = ? WHERE PersonID = ?";
-    try (Connection connection = db.getConnection();
-         PreparedStatement statement = connection.prepareStatement(query)) {
-        statement.setString(1, dto.getFirstName());
-        statement.setString(2, dto.getLastName());
-        statement.setDate(3, date);
-        statement.setInt(4, dto.getID());
+//     String query = "UPDATE Person SET Firstname = ?, Lastname = ?, HireDate = ? WHERE PersonID = ?";
+//     try (Connection connection = db.getConnection();
+//          PreparedStatement statement = connection.prepareStatement(query)) {
+//         statement.setString(1, dto.getFirstName());
+//         statement.setString(2, dto.getLastName());
+//         statement.setDate(3, date);
+//         statement.setInt(4, dto.getID());
 
-        return statement.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Xử lý lỗi nếu cần thiết
-        return 0;
-    }
-}
+//         return statement.executeUpdate();
+//     } catch (SQLException e) {
+//         e.printStackTrace();
+//         // Xử lý lỗi nếu cần thiết
+//         return 0;
+//     }
+// }
     @Override
     public int removeObject(int objectID) {
         String query = String.format("DELETE FROM Person WHERE PersonID =  %d", objectID);
@@ -108,7 +108,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     @Override
     public <T> T getAnObjectByID(int objectID) {
-        String query = String.format("SELECT * FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID WHERE Person.PersonID=%d", objectID);
+        String query = String.format("SELECT * FROM Person WHERE Person.PersonID=%d", objectID);
 
         try {
             ResultSet rsSet = db.executeQuery(query);
@@ -121,7 +121,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
                     rsSet.getInt("PersonID"),
                     rsSet.getString("Lastname"),
                     rsSet.getString("Firstname"),
-                    LocalDateTime.parse(rsSet.getString("HireDate"), formatter),new OfficeAssignmentDTO(rsSet.getInt("PersonID"), rsSet.getString("Location"), LocalDateTime.parse(rsSet.getString("Timestamp"),formatter)));
+                    LocalDateTime.parse(rsSet.getString("HireDate"), formatter));
 
         } catch (SQLException ex) {
             return null;
@@ -131,7 +131,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     @Override
     public List<LecturerDTO> getAllLecturers() {
         String query = String.format(
-                "SELECT PersonID, Lastname, Firstname, HireDate, Location FROM Person join OfficeAssignment on Person.PersonID = OfficeAssignment.InstructorID "
+                "SELECT PersonID, Lastname, Firstname, HireDate FROM Person "
                 + "WHERE HireDate IS NOT NULL");
 
         return getLecturers(query);

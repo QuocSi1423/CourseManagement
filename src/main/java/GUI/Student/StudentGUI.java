@@ -123,12 +123,12 @@ public class StudentGUI extends javax.swing.JPanel {
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         table.setDefaultRenderer(Object.class, new CustomRowHeightRenderer());
         table.getTableHeader().setDefaultRenderer(new CustomHeaderRenderer());
-        table.getColumnModel().getColumn(4).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(renderer);
         DefaultTableModel model = (DefaultTableModel) this.table.getModel();
         model.setRowCount(0);
         for (StudentDTO stu : studentList) {
             model.addRow(new Object[]{
-                    stu.getID(), stu.getLastName(), stu.getFirstName(), stu.getEnrollmentDate(),
+                    stu.getID(), stu.getLastName(), stu.getFirstName(),
                     lblDelete
             });
         }
@@ -153,6 +153,7 @@ public class StudentGUI extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
+        btnCreate = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
@@ -230,6 +231,20 @@ public class StudentGUI extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setPreferredSize(new java.awt.Dimension(72, 92));
 
+        btnCreate.setBackground(new java.awt.Color(11, 8, 171));
+        btnCreate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCreate.setForeground(new java.awt.Color(255, 255, 255));
+        // btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("../Icon/add.png"))); // NOI18N
+        btnCreate.setText("Thêm");
+        btnCreate.setMinimumSize(new java.awt.Dimension(120, 27));
+        btnCreate.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnCreate);
+
         btnSave.setBackground(new java.awt.Color(11, 8, 171));
         btnSave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
@@ -263,8 +278,8 @@ public class StudentGUI extends javax.swing.JPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
         );
         jPanel2Layout.setVerticalGroup(
@@ -293,7 +308,7 @@ public class StudentGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Họ", "Tên", "Ngày đăng ký", "Xóa"
+                "STT", "Họ", "Tên", "Xóa"
             }
         ));
         table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -306,8 +321,7 @@ public class StudentGUI extends javax.swing.JPanel {
             table.getColumnModel().getColumn(0).setPreferredWidth(82);
             table.getColumnModel().getColumn(1).setPreferredWidth(238);
             table.getColumnModel().getColumn(2).setPreferredWidth(227);
-            table.getColumnModel().getColumn(3).setPreferredWidth(285);
-            table.getColumnModel().getColumn(4).setPreferredWidth(120);
+            table.getColumnModel().getColumn(3).setPreferredWidth(120);
         }
 
         jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -319,10 +333,14 @@ public class StudentGUI extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,21 +381,11 @@ public class StudentGUI extends javax.swing.JPanel {
         if (txtFirstName.getText().equals("") || txtLastName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin học viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (flag == -1) {
-                currentDate = LocalDateTime.now();
-                StudentDTO stu = new StudentDTO();
-                stu.setFirstName(txtFirstName.getText());
-                stu.setLastName(txtLastName.getText());
-                stu.setEnrollmentDate(currentDate);
-                System.out.println(stu.getFirstName() + "," + stu.getLastName() + "," + stu.getEnrollmentDate().toString());
-                studentBUS.insertObject(stu);
-            } else {
-                StudentDTO stu = (StudentDTO) studentBUS.getAnObjectByID(flag);
-                stu.setFirstName(txtFirstName.getText());
-                stu.setLastName(txtLastName.getText());
-                studentBUS.updateObject(stu);
-                flag = -1;
-            }
+            StudentDTO stu = (StudentDTO) studentBUS.getAnObjectByID(flag);
+            stu.setFirstName(txtFirstName.getText());
+            stu.setLastName(txtLastName.getText());
+            studentBUS.updateObject(stu);
+            flag = -1;
         }
         studentList = studentBUS.getAllStudent();
         showTable();
@@ -398,6 +406,23 @@ public class StudentGUI extends javax.swing.JPanel {
         System.out.println(column + " " + row);
         delete(column, row);
     }//GEN-LAST:event_tableMouseClicked
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        if (txtFirstName.getText().equals("") || txtLastName.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin học viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            currentDate = LocalDateTime.now();
+            StudentDTO stu = new StudentDTO();
+            stu.setFirstName(txtFirstName.getText());
+            stu.setLastName(txtLastName.getText());
+            stu.setEnrollmentDate(currentDate);
+            System.out.println(stu.getFirstName() + "," + stu.getLastName() + "," + stu.getEnrollmentDate().toString());
+            studentBUS.insertObject(stu);
+        }
+        studentList = studentBUS.getAllStudent();
+        showTable();
+    }//GEN-LAST:event_btnCreateActionPerformed
 
     public void delete(int column, int row) {
         System.out.println("aaaaa");
@@ -472,6 +497,7 @@ public class StudentGUI extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
