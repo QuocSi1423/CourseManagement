@@ -384,10 +384,7 @@ public class OnsiteCourse extends javax.swing.JFrame {
                 }  
     }//GEN-LAST:event_cbKhoaItemStateChanged
     public void setData(){
-        
-//        ---------------> Đổ dữ liệu ra các TextField <--------------------------
-        
-        
+//        ---------------> Đổ dữ liệu ra các TextField <-------------------------- 
         OnsiteCourseDTO onsiteCouDTO= onCouBus.getAnOnsiteCourse(courseID);
         CourseDTO couDTO= couBus.getACourseByID(courseID);
         tfMaKhoaHoc.setText(onsiteCouDTO.getCourseID()+"");

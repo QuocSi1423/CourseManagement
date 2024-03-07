@@ -64,13 +64,11 @@ public class StudentGradeDAL implements IStudentGradeDAL, IObjectDAL {
     public <T> int updateObject(T object) {
         StudentGradeDTO studentGradeDTO = (StudentGradeDTO) object;
       
-        String updateQuery = "update StudentGrade set Grade = ?, CourseID = ?, StudentID = ? WHERE EnrollmentID = ?";
+        String updateQuery = "update StudentGrade set Grade = ? WHERE EnrollmentID = ?";
         try {
             PreparedStatement preparedStatement = connect.prepareStatement(updateQuery);
             preparedStatement.setDouble(1, studentGradeDTO.getGrade());
-            preparedStatement.setDouble(2, studentGradeDTO.getCourse().getCourseID());
-            preparedStatement.setInt(3, studentGradeDTO.getStudent().getID());
-            preparedStatement.setInt(4, studentGradeDTO.getEnrollmentID());
+            preparedStatement.setInt(2, studentGradeDTO.getEnrollmentID());
             return preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             return 0;

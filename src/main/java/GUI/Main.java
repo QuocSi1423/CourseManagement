@@ -49,7 +49,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Máy tính\\Xay dung phan mem theo mo hinh phan lop\\CourseManagement\\src\\main\\java\\Icon\\pie-chart.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("./CourseManagement/src/main/java/GUI/Icon/pie-chart.png")); // NOI18N
         jLabel1.setText("Quản lý khóa học");
 
         javax.swing.GroupLayout CourseManageJPLayout = new javax.swing.GroupLayout(CourseManageJP);
@@ -79,7 +79,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(".\\Icon\\graduation-hat.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./CourseManagement/src/main/java/GUI/Icon/graduation-hat.png")); // NOI18N
         jLabel2.setText("Quản lý học viên");
 
         javax.swing.GroupLayout StudentManageJPLayout = new javax.swing.GroupLayout(StudentManageJP);
@@ -106,10 +106,9 @@ public class Main extends javax.swing.JFrame {
                 clickedTeacherManagement(evt);
             }
         });
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Máy tính\\Xay dung phan mem theo mo hinh phan lop\\CourseManagement\\src\\main\\java\\Icon\\presentaation.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./CourseManagement/src/main/java/GUI/Icon/presentaation.png")); // NOI18N
         jLabel3.setText("Quản lý giảng viên");
 
         javax.swing.GroupLayout techerManageJPLayout = new javax.swing.GroupLayout(techerManageJP);
@@ -139,7 +138,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\ADMIN\\OneDrive\\Máy tính\\Xay dung phan mem theo mo hinh phan lop\\CourseManagement\\src\\main\\java\\Icon\\from-a-to-z.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("\\Icon\\from-a-to-z.png")); // NOI18N
         jLabel4.setText("Quản lý khoa");
 
         // javax.swing.GroupLayout facultyManageJPLayout = new javax.swing.GroupLayout(facultyManageJP);

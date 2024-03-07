@@ -38,6 +38,7 @@ public class OnsiteCourseBUS {
         OnsiteCourseDTO result = null;
         try {
             while(resultSet.next()) {
+                System.out.println("...");
                 result = new OnsiteCourseDTO(resultSet.getInt("CourseID"), 
                     resultSet.getString("Location"),
                     resultSet.getString("Days"),

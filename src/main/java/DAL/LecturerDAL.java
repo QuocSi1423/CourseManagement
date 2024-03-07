@@ -160,8 +160,6 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
     }
 
     private List<LecturerDTO> getLecturers(String query) {
-                System.out.println(query);
-
         try {
             List<LecturerDTO> rs = new ArrayList<>();
             ResultSet rsSet = db.executeQuery(query);
@@ -172,15 +170,9 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
                         rsSet.getString("Lastname"),
                         rsSet.getString("Firstname"),
                         LocalDateTime.parse(rsSet.getString("HireDate"), formatter));
-            //    OfficeAssignmentDTO assigment= new OfficeAssignmentDTO();
-            //    assigment.setLocation(rsSet.getString("Location"));
-            //     dto.setOfficeAssignment(assigment);
-
                 rs.add(dto);
             }
-
             return rs;
-
         } catch (SQLException ex) {
             System.out.println(ex);
             return null;
@@ -189,12 +181,12 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
 
     @Override
     public List<LecturerDTO> getLecturerNotAssignForACourse(int courseID) {
-        String query = String.format("select * from person"+
-                " left join courseinstructor" + 
-                " on person.PersonID = courseinstructor.PersonID"+
-                " and courseinstructor.CourseID = %d"+
-                " where person.HireDate is not null"+
-                " and courseinstructor.PersonID is null",courseID);
+        String query = String.format("select * from Person"+
+                " left join CourseInstructor" + 
+                " on Person.PersonID = CourseInstructor.PersonID"+
+                " and CourseInstructor.CourseID = %d"+
+                " where Person.HireDate is not null"+
+                " and CourseInstructor.PersonID is null",courseID);
 
         return getLecturers(query);
     }

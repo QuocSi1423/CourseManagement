@@ -54,7 +54,6 @@ public class OnsiteCourseDAL implements IObjectDAL{
 
     public Object getAnObjectByID(int objectID) {
         String query = "SELECT * FROM OnsiteCourse where `CourseID` = " + objectID;
-        System.out.println(query);
         ResultSet result = this.db.executeQuery(query);
         return result;
     }

@@ -80,7 +80,7 @@ public class CreateCourse extends javax.swing.JFrame {
         SaveJBT = new javax.swing.JButton();
         CancelJBT = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -436,7 +436,6 @@ public class CreateCourse extends javax.swing.JFrame {
         LocalTime time = LocalTime.parse(this.TimeFF.getText());
         OnsiteCourseDTO onsiteCourseDTO = new OnsiteCourseDTO( courseId, location, days, time);
         this.onsiteCourseBUS.createAnOnsiteCourse(onsiteCourseDTO);
-        this.dispose();
     }
     
     public void getCourseOnline() {

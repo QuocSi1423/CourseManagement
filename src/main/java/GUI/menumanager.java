@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,8 +24,11 @@ public class menumanager extends javax.swing.JFrame {
     private String type;
     public menumanager(int courseID, String type) {
         this.courseID = courseID;
+        this.type = type;
         System.out.println(this.courseID);
         initComponents();
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -43,10 +48,16 @@ public class menumanager extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
+        
+
+
+
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(465, 529));
+
+        
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(479, 529));

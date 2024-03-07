@@ -20,9 +20,6 @@ public class InstructorBUS {
     }
 
     public int createAInstructor(InstructorDTO instructor) {
-        // check time conflict course instructor
-        // code here
-        // ...
         return instructorDAL.insertInstructor(instructor);
     }
 

@@ -36,7 +36,6 @@ public class OnlineCourseDAL implements IObjectDAL{
     }
 
     public int removeObject(int objectID) {
-        // Department department = (Department) obj;
         String query = "DELETE FROM `OnlineCourse` WHERE `OnlineCourse`.`CourseID` = " + objectID;
         int result = this.db.executeNonQuery(query);
         return result;

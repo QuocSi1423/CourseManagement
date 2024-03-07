@@ -79,13 +79,7 @@ public class CourseManagers extends javax.swing.JPanel {
     }
 
     public void Delete(int column, int row) {
-        // int column = TableCourse.getColumnModel().getColumnIndexAtX(evt.getX()); //
-        // Lấy chỉ số cột từ vị trí x của chuột
-        // int row = evt.getY() / TableCourse.getRowHeight(); // Lấy chỉ số dòng từ vị
-        // trí y của chuột
-
-        if (column == 7) { // Xác định chỉ số cột thứ 7 (chỉ số bắt đầu từ 0)
-            // Lấy giá trị của cột thứ 1 của dòng được nhấp chuột và in ra
+        if (column == 7) { 
             Object value = TableCourse.getValueAt(row, 1);
             System.out.println("Value of column 1: " + value);
             int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa",
@@ -128,15 +122,7 @@ public class CourseManagers extends javax.swing.JPanel {
                 functionmain();
             }
         } else if (column == 6) {
-            // Object id = TableCourse.getValueAt(row, 1);
-            // Object name = TableCourse.getValueAt(row, 2);
-            // Object type = TableCourse.getValueAt(row, 4);
-            // Object khoa = TableCourse.getValueAt(row, 3);
-            // Object tinchi = TableCourse.getValueAt(row, 5);
-
-            // JOptionPane.showMessageDialog(null, " Mã khóa học: " + id + "\n" + " Tên khóa học :" + name + "\n" +
-            //         " Loại: " + type + "\n" + " Tên khoa:" + khoa + "\n" + " Số tín chỉ :" + tinchi + "\n", "Thông báo",
-            //         JOptionPane.CLOSED_OPTION);
+            
             int courseID = (int)TableCourse.getValueAt(row, 1);
             String type = (String)TableCourse.getValueAt(row, 4);
             new menumanager(courseID, type).setVisible(true);
@@ -285,6 +271,10 @@ public class CourseManagers extends javax.swing.JPanel {
         ButtonAddCourse.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         ButtonAddCourse.setForeground(new java.awt.Color(255, 255, 255));
         ButtonAddCourse.setText("+  Tạo khóa học");
+
+        ButtonAddCourse.addActionListener(e->{
+            new CreateCourse().setVisible(true);
+        });
 
         Search.setBackground(new java.awt.Color(152, 162, 255));
         Search.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
