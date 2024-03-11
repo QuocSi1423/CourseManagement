@@ -335,6 +335,7 @@ public class AddStudentsGUI extends javax.swing.JFrame {
         model.addColumn("Ngày");
         model.addColumn("Xóa");
         jTable_AddedStudents.setModel(model);
+
         for (StudentDTO studentDTO : list) {
             LocalDateTime localDateTime = studentDTO.getEnrollmentDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -342,6 +343,7 @@ public class AddStudentsGUI extends javax.swing.JFrame {
             ImageIcon icon = new ImageIcon(getClass().getResource("/Icon/icons8-delete-24.png"));
             model.addRow(new Object[]{studentDTO.getID(), studentDTO.getFirstName(), studentDTO.getLastName(), formattedDate, icon});
         }
+        
         jTable_AddedStudents.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int row = jTable_AddedStudents.rowAtPoint(e.getPoint());

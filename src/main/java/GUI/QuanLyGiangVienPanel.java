@@ -575,7 +575,7 @@ public class QuanLyGiangVienPanel extends javax.swing.JPanel {
 
 		for (LecturerDTO lecturer : lecturerList) {
 			Object[] rowData = { lecturer.getID(), lecturer.getFirstName(), lecturer.getLastName(),
-					lecturer.getOfficeAssignment().getLocation(), lecturer.gethireDate(), " " };
+					null, lecturer.gethireDate(), " " };
 			model.addRow(rowData);
 		}
 	}// GEN-LAST:event_btSearchActionPerformed

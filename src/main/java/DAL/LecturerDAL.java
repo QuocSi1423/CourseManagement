@@ -155,7 +155,7 @@ public class LecturerDAL implements IObjectDAL, ILecturerDAL {
         String query = String.format(
                 "SELECT PersonID, Lastname, Firstname, HireDate FROM Person "
                 + " WHERE HireDate IS NOT NULL "
-                + "AND CONCAT(Firstname,' ',Lastname,' ',Firstname) LIKE '%{0}%'", name);
+                + "AND CONCAT(Firstname,' ',Lastname,' ',Firstname) LIKE '%%%s%%'", name);
         return getLecturers(query);
     }
 

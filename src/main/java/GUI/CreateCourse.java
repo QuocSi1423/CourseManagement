@@ -55,7 +55,7 @@ public class CreateCourse extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -67,8 +67,6 @@ public class CreateCourse extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         TitleJTF = new javax.swing.JTextField();
         LocationJTF = new javax.swing.JTextField();
-        DaysJTF = new javax.swing.JTextField();
-        CreditsJTF = new javax.swing.JTextField();
         UrlJTF = new javax.swing.JTextField();
         DepartmentJCB = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
@@ -77,10 +75,16 @@ public class CreateCourse extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         OnlineLearningJRB = new javax.swing.JRadioButton();
         TimeFF = new javax.swing.JFormattedTextField();
+        MondayCB = new javax.swing.JCheckBox();
+        TuesdayCB = new javax.swing.JCheckBox();
+WednesdayCB = new javax.swing.JCheckBox();
+        ThursdayCB = new javax.swing.JCheckBox();
+        FridayCB = new javax.swing.JCheckBox();
+        CreditsJTF = new javax.swing.JTextField();
         SaveJBT = new javax.swing.JButton();
         CancelJBT = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -89,8 +93,8 @@ public class CreateCourse extends javax.swing.JFrame {
         jLabel1.setText("TẠO KHÓA HỌC");
         jLabel1.setToolTipText("");
 
-        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200)));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setToolTipText("");
         jPanel1.setMaximumSize(new java.awt.Dimension(811, 330));
 
@@ -98,7 +102,7 @@ public class CreateCourse extends javax.swing.JFrame {
         jLabel2.setText("Thông tin chung");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setText("Số ngày học");
+        jLabel4.setText("Ngày học");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("Thông tin chi tiết");
@@ -112,15 +116,6 @@ public class CreateCourse extends javax.swing.JFrame {
         TitleJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         LocationJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        DaysJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        CreditsJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        CreditsJTF.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                checkCreditsInput(evt);
-            }
-        });
 
         UrlJTF.setBackground(new java.awt.Color(178, 174, 174));
         UrlJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -149,11 +144,22 @@ public class CreateCourse extends javax.swing.JFrame {
                 OnlineLearningJRBActionPerformed(evt);
             }
         });
-
-        TimeFF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.MEDIUM))));
+TimeFF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         TimeFF.setToolTipText("");
         TimeFF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TimeFF.setName(""); // NOI18N
+
+        MondayCB.setText("Thứ hai");
+
+        TuesdayCB.setText("Thứ ba");
+
+        WednesdayCB.setText("Thứ tư");
+
+        ThursdayCB.setText("Thứ năm");
+
+        FridayCB.setText("Thứ sáu");
+
+        CreditsJTF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,26 +175,35 @@ public class CreateCourse extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(OnlineLearningJRB))
                             .addComponent(jLabel2))
-                        .addContainerGap(561, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DaysJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(LocationJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(TitleJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CreditsJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CreditsJTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+.addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(ThursdayCB)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(FridayCB))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(MondayCB)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(TuesdayCB)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(WednesdayCB))
+                                    .addComponent(LocationJTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
@@ -210,12 +225,12 @@ public class CreateCourse extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(TitleJTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(DepartmentJCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+.addComponent(DepartmentJCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(CreditsJTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(OnlineLearningJRB))
@@ -226,12 +241,21 @@ public class CreateCourse extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(TimeFF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(DaysJTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UrlJTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(27, 27, 27))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(UrlJTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(MondayCB)
+                            .addComponent(TuesdayCB)
+                            .addComponent(WednesdayCB))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ThursdayCB)
+                            .addComponent(FridayCB))))
+                .addGap(9, 9, 9))
         );
 
         SaveJBT.setBackground(new java.awt.Color(0, 0, 204));
@@ -240,7 +264,7 @@ public class CreateCourse extends javax.swing.JFrame {
         SaveJBT.setText("Lưu");
         SaveJBT.setAutoscrolls(true);
         SaveJBT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        SaveJBT.addActionListener(new java.awt.event.ActionListener() {
+SaveJBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAll(evt);
             }
@@ -285,7 +309,7 @@ public class CreateCourse extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveJBT)
                     .addComponent(CancelJBT))
@@ -293,36 +317,29 @@ public class CreateCourse extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void OnlineLearningJRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OnlineLearningJRBActionPerformed
-        if(this.OnlineLearningJRB.isSelected()) {
+    private void OnlineLearningJRBActionPerformed(java.awt.event.ActionEvent evt) {
+if(this.OnlineLearningJRB.isSelected()) {
             onlinePage();
             this.studyOnline = true;
         } else {
             onsitePage();
             this.studyOnline = false;
         }
-    }//GEN-LAST:event_OnlineLearningJRBActionPerformed
+    }                                                 
 
-    private void cancelAll(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAll
+    private void cancelAll(java.awt.event.ActionEvent evt) {                           
         resetPage();
-    }//GEN-LAST:event_cancelAll
+    }                          
 
-    private void saveAll(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAll
+    private void saveAll(java.awt.event.ActionEvent evt) {                         
         if(!studyOnline) {
             getCourseOnsite();
         } else {
             getCourseOnline();
         }
-    }//GEN-LAST:event_saveAll
-
-    private void checkCreditsInput(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_checkCreditsInput
-        if(!isNumbers(this.CreditsJTF.getText())) {
-            JOptionPane.showMessageDialog(null, "Số tín chỉ phải là số nguyên lớn hơn 0!", "", JOptionPane.WARNING_MESSAGE);
-            this.CreditsJTF.setText("");
-        }
-    }//GEN-LAST:event_checkCreditsInput
+    }                        
 
     public static void main(String args[]) {
         FlatMacLightLaf.setup();
@@ -333,17 +350,21 @@ public class CreateCourse extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton CancelJBT;
     private javax.swing.JTextField CreditsJTF;
-    private javax.swing.JTextField DaysJTF;
     private javax.swing.JComboBox<String> DepartmentJCB;
+    private javax.swing.JCheckBox FridayCB;
     private javax.swing.JTextField LocationJTF;
+    private javax.swing.JCheckBox MondayCB;
     private javax.swing.JRadioButton OnlineLearningJRB;
     private javax.swing.JButton SaveJBT;
+    private javax.swing.JCheckBox ThursdayCB;
     private javax.swing.JFormattedTextField TimeFF;
     private javax.swing.JTextField TitleJTF;
+    private javax.swing.JCheckBox TuesdayCB;
     private javax.swing.JTextField UrlJTF;
+    private javax.swing.JCheckBox WednesdayCB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -355,7 +376,7 @@ public class CreateCourse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 
     // các phương thức điều chỉnh giao diện 
     public void loadDepartmentToPage() {
@@ -368,12 +389,15 @@ public class CreateCourse extends javax.swing.JFrame {
     public void onsitePage() {
         this.LocationJTF.enable(true);
         this.LocationJTF.setBackground(new Color(255,255,255));
-        this.DaysJTF.enable(true);
-        this.DaysJTF.setBackground(new Color(255,255,255));
+        this.MondayCB.setEnabled(true);
+        this.TuesdayCB.setEnabled(true);
+        this.WednesdayCB.setEnabled(true);
+        this.ThursdayCB.setEnabled(true);
+        this.FridayCB.setEnabled(true);
         this.TimeFF.enable(true);
         this.TimeFF.setBackground(new Color(255,255,255));
         this.UrlJTF.enable(false);
-        this.UrlJTF.setBackground(new Color(178, 174, 174));
+this.UrlJTF.setBackground(new Color(178, 174, 174));
         this.UrlJTF.setText("");
     }
     
@@ -381,9 +405,11 @@ public class CreateCourse extends javax.swing.JFrame {
         this.LocationJTF.enable(false);
         this.LocationJTF.setBackground(new Color(178, 174, 174));
         this.LocationJTF.setText("");
-        this.DaysJTF.enable(false);
-        this.DaysJTF.setBackground(new Color(178, 174, 174));
-        this.DaysJTF.setText("");
+        this.MondayCB.setEnabled(false);
+        this.TuesdayCB.setEnabled(false);
+        this.WednesdayCB.setEnabled(false);
+        this.ThursdayCB.setEnabled(false);
+        this.FridayCB.setEnabled(false);;
         this.TimeFF.enable(false);
         this.TimeFF.setBackground(new Color(178, 174, 174));
         this.TimeFF.setText("");
@@ -397,7 +423,11 @@ public class CreateCourse extends javax.swing.JFrame {
         this.DepartmentJCB.setSelectedIndex(0);
         this.LocationJTF.setText("");
         this.TimeFF.setText("");
-        this.DaysJTF.setText("");
+        this.MondayCB.setSelected(false);
+        this.TuesdayCB.setSelected(false);
+        this.WednesdayCB.setSelected(false);
+        this.ThursdayCB.setSelected(false);
+        this.FridayCB.setSelected(false);
         this.UrlJTF.setText("");
         this.OnlineLearningJRB.setSelected(false);
     }
@@ -420,8 +450,8 @@ public class CreateCourse extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập thời gian khóa học!", "", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(this.DaysJTF.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập số ngày học của khóa học!", "", JOptionPane.WARNING_MESSAGE);
+        if(weekdaysAreChosen()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày học của khóa học!", "", JOptionPane.WARNING_MESSAGE);
             return;
         }
         // khởi tạo đối tượng courseDTO để lưu vào database
@@ -432,9 +462,9 @@ public class CreateCourse extends javax.swing.JFrame {
         int courseId = this.courseBUS.createCourse(courseDTO);
         // khởi tạo đối tượng onsiteCourseDTO để lưu vào database
         String location = this.LocationJTF.getText();
-        String days = this.DaysJTF.getText();
+        String days = getWeekdaysAreChosen();
         LocalTime time = LocalTime.parse(this.TimeFF.getText());
-        OnsiteCourseDTO onsiteCourseDTO = new OnsiteCourseDTO( courseId, location, days, time);
+OnsiteCourseDTO onsiteCourseDTO = new OnsiteCourseDTO( courseId, location, days, time);
         this.onsiteCourseBUS.createAnOnsiteCourse(onsiteCourseDTO);
     }
     
@@ -489,5 +519,32 @@ public class CreateCourse extends javax.swing.JFrame {
             }
         }
         return departmentDTO;
+    }
+    
+    public boolean weekdaysAreChosen() {
+        if(this.MondayCB.isSelected() || this.TuesdayCB.isSelected() || this.WednesdayCB.isSelected() || this.ThursdayCB.isSelected() || this.FridayCB.isSelected()) {
+            return false;
+        }
+        return true;
+    }
+    
+    public String getWeekdaysAreChosen() {
+        String weekdaysAreChosen = "";
+        if(this.MondayCB.isSelected()) {
+            weekdaysAreChosen += "Mon";
+        }
+        if(this.TuesdayCB.isSelected()) {
+            weekdaysAreChosen += "Tue";
+        }
+        if(this.WednesdayCB.isSelected()) {
+            weekdaysAreChosen += "Wed";
+        }
+if(this.ThursdayCB.isSelected()) {
+            weekdaysAreChosen += "Thu";
+        }
+        if(this.FridayCB.isSelected()) {
+            weekdaysAreChosen += "Fri";
+        }
+        return weekdaysAreChosen;
     }
 }
